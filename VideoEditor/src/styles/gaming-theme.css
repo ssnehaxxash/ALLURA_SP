@@ -1,0 +1,331 @@
+/* ALLURA GAMING STUDIO THEME - Direct Integration */
+
+/* Override existing DesignCombo styles */
+body {
+  background: #0D0D0D !important;
+  font-family: 'Inter', sans-serif !important;
+}
+
+/* Gaming Background */
+.background-gaming {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: 
+    radial-gradient(circle at 20% 20%, rgba(255, 107, 107, 0.1) 0%, transparent 40%),
+    radial-gradient(circle at 80% 80%, rgba(78, 205, 196, 0.1) 0%, transparent 40%),
+    radial-gradient(circle at 50% 50%, rgba(82, 39, 255, 0.05) 0%, transparent 60%),
+    linear-gradient(45deg, #0D0D0D 0%, #1A1A1A 100%);
+  z-index: -1;
+  pointer-events: none;
+}
+
+/* Gaming Header/Navbar */
+.bg-muted {
+  background: rgba(13, 13, 13, 0.95) !important;
+  backdrop-filter: blur(20px) !important;
+  border-bottom: 1px solid rgba(255, 107, 107, 0.3) !important;
+}
+
+/* Gaming Logo */
+.logo-gaming {
+  font-size: 1.25rem !important;
+  font-weight: 700 !important;
+  background: linear-gradient(135deg, #FF6B6B, #4ECDC4) !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  background-clip: text !important;
+}
+
+/* Gaming Sidebar */
+.bg-sidebar {
+  background: rgba(18, 18, 18, 0.95) !important;
+  backdrop-filter: blur(20px) !important;
+  border-right: 1px solid rgba(255, 107, 107, 0.2) !important;
+}
+
+/* Gaming Main Area */
+.bg-background {
+  background: rgba(10, 10, 10, 0.95) !important;
+}
+
+/* Gaming Export Button */
+button:has(svg[data-lucide="download"]) {
+  background: linear-gradient(135deg, #FF6B6B, #4ECDC4) !important;
+  color: white !important;
+  font-weight: 600 !important;
+  border: none !important;
+  transition: all 0.3s ease !important;
+}
+
+button:has(svg[data-lucide="download"]):hover {
+  transform: translateY(-1px) !important;
+  box-shadow: 0 4px 12px rgba(255, 107, 107, 0.3) !important;
+}
+
+/* Gaming Menu Items */
+[data-state="open"] {
+  background: rgba(255, 107, 107, 0.1) !important;
+  border: 1px solid rgba(255, 107, 107, 0.3) !important;
+}
+
+/* Gaming Timeline */
+.timeline-container,
+[data-timeline] {
+  background: rgba(15, 15, 15, 0.95) !important;
+  border-top: 1px solid rgba(255, 107, 107, 0.3) !important;
+}
+
+/* Gaming Properties Panel */
+.h-full > div {
+  background: rgba(18, 18, 18, 0.95) !important;
+  border-left: 1px solid rgba(78, 205, 196, 0.2) !important;
+}
+
+/* Gaming Text Colors */
+.text-zinc-200,
+.text-foreground {
+  color: #ffffff !important;
+}
+
+.text-muted-foreground {
+  color: #888888 !important;
+}
+
+/* Gaming Borders */
+.border-border,
+.border {
+  border-color: rgba(255, 107, 107, 0.2) !important;
+}
+
+/* Gaming Cards/Panels */
+.bg-card {
+  background: rgba(255, 255, 255, 0.03) !important;
+  border: 1px solid rgba(78, 205, 196, 0.2) !important;
+  border-radius: 8px !important;
+}
+
+.bg-card:hover {
+  background: rgba(78, 205, 196, 0.1) !important;
+  border-color: rgba(78, 205, 196, 0.4) !important;
+}
+
+/* Gaming Player Area */
+canvas,
+video {
+  border-radius: 16px !important;
+  border: 2px solid rgba(255, 107, 107, 0.1) !important;
+}
+
+/* Gaming Scrollbars */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.3);
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 107, 107, 0.5);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 107, 107, 0.7);
+}
+
+/* Gaming Tooltips */
+.tooltip,
+[data-tooltip] {
+  background: rgba(0, 0, 0, 0.9) !important;
+  color: #ffffff !important;
+  border: 1px solid rgba(255, 107, 107, 0.3) !important;
+}
+
+/* 🎮 ALLURA GAMING STUDIO - COMPLETE THEME */
+
+/* Main Container */
+.allura-gaming-studio {
+    font-family: 'Inter', sans-serif;
+    background: #0D0D0D;
+    color: #ffffff;
+    height: 100vh;
+    overflow: hidden;
+}
+
+/* Gaming Background */
+.background-gaming {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: 
+        radial-gradient(circle at 20% 20%, rgba(255, 107, 107, 0.1) 0%, transparent 40%),
+        radial-gradient(circle at 80% 80%, rgba(78, 205, 196, 0.1) 0%, transparent 40%),
+        radial-gradient(circle at 50% 50%, rgba(82, 39, 255, 0.05) 0%, transparent 60%),
+        linear-gradient(45deg, #0D0D0D 0%, #1A1A1A 100%);
+    z-index: -1;
+    pointer-events: none;
+}
+
+/* Studio Layout */
+.studio-container-gaming {
+    display: grid;
+    grid-template-columns: 280px 1fr 320px;
+    height: calc(100vh - 44px);
+    gap: 1px;
+}
+
+/* Gaming Sidebar */
+.sidebar-gaming {
+    background: rgba(18, 18, 18, 0.95);
+    backdrop-filter: blur(20px);
+    border-right: 1px solid rgba(255, 107, 107, 0.2);
+    display: flex;
+    overflow-y: auto;
+}
+
+/* Gaming Workspace */
+.workspace-gaming {
+    display: flex;
+    flex-direction: column;
+    background: rgba(10, 10, 10, 0.95);
+    overflow: hidden;
+}
+
+/* Gaming Player Panel */
+.player-panel-gaming {
+    position: relative;
+    background: rgba(0, 0, 0, 0.8);
+}
+
+.player-area-gaming {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid rgba(255, 107, 107, 0.1);
+    border-radius: 16px;
+    margin: 1rem;
+    background: rgba(0, 0, 0, 0.9);
+}
+
+/* Gaming Timeline Panel */
+.timeline-panel-gaming {
+    min-height: 50px;
+    background: rgba(15, 15, 15, 0.95);
+    border-top: 1px solid rgba(255, 107, 107, 0.3);
+    backdrop-filter: blur(10px);
+}
+
+/* Gaming Properties Panel */
+.properties-panel-gaming {
+    background: rgba(18, 18, 18, 0.95);
+    backdrop-filter: blur(20px);
+    border-left: 1px solid rgba(78, 205, 196, 0.2);
+    overflow-y: auto;
+}
+
+/* Gaming Resize Handle */
+.resize-handle-gaming {
+    background: rgba(255, 107, 107, 0.2);
+    transition: all 0.3s ease;
+}
+
+.resize-handle-gaming:hover {
+    background: rgba(255, 107, 107, 0.4);
+}
+
+/* Override existing DesignCombo styles */
+.bg-muted {
+    background: rgba(13, 13, 13, 0.95) !important;
+    backdrop-filter: blur(20px) !important;
+    border-bottom: 1px solid rgba(255, 107, 107, 0.3) !important;
+}
+
+.bg-sidebar {
+    background: rgba(18, 18, 18, 0.95) !important;
+    backdrop-filter: blur(20px) !important;
+}
+
+.bg-background {
+    background: rgba(10, 10, 10, 0.95) !important;
+}
+
+.bg-card {
+    background: rgba(255, 255, 255, 0.03) !important;
+    border: 1px solid rgba(78, 205, 196, 0.2) !important;
+    border-radius: 8px !important;
+    transition: all 0.3s ease;
+}
+
+.bg-card:hover {
+    background: rgba(78, 205, 196, 0.1) !important;
+    border-color: rgba(78, 205, 196, 0.4) !important;
+}
+
+/* Gaming Text Colors */
+.text-zinc-200,
+.text-foreground {
+    color: #ffffff !important;
+}
+
+.text-muted-foreground {
+    color: #888888 !important;
+}
+
+/* Gaming Borders */
+.border-border,
+.border {
+    border-color: rgba(255, 107, 107, 0.2) !important;
+}
+
+/* Gaming Scrollbars */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.3);
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgba(255, 107, 107, 0.5);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 107, 107, 0.7);
+}
+
+/* Mobile Responsive */
+@media (max-width: 1200px) {
+    .studio-container-gaming {
+        grid-template-columns: 250px 1fr 280px;
+    }
+}
+
+@media (max-width: 1024px) {
+    .studio-container-gaming {
+        grid-template-columns: 220px 1fr 250px;
+    }
+}
+
+@media (max-width: 768px) {
+    .studio-container-gaming {
+        grid-template-columns: 1fr;
+    }
+    
+    .sidebar-gaming, 
+    .properties-panel-gaming {
+        display: none;
+    }
+}
+
