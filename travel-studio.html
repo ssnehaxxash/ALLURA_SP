@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ALLURA Studio - Travel Creator</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #0A0F1C;
+            color: #ffffff;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        /* Travel Theme Background */
+        .background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 10% 20%, rgba(0, 191, 255, 0.1) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(255, 165, 0, 0.1) 0%, transparent 40%),
+                radial-gradient(circle at 50% 10%, rgba(50, 205, 50, 0.05) 0%, transparent 60%),
+                linear-gradient(135deg, #0A0F1C 0%, #1A2332 50%, #2C4A6B 100%);
+            z-index: -1;
+        }
+
+        .background::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: 
+                radial-gradient(circle at 20% 30%, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+                radial-gradient(circle at 70% 80%, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+            background-size: 60px 60px, 80px 80px;
+        }
+
+        /* Header */
+        .header {
+            background: rgba(10, 15, 28, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(0, 191, 255, 0.2);
+            padding: 0.75rem 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 60px;
+        }
+
+        .logo {
+            font-size: 1.25rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #00BFFF, #FFA500);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .header-controls {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .export-btn {
+            background: linear-gradient(135deg, #00BFFF, #FFA500);
+            border: none;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 0.9rem;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-size: 0.9rem;
+        }
+
+        .user-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #00BFFF, #32CD32);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 0.8rem;
+        }
+
+        /* Main Layout */
+        .studio-container {
+            display: grid;
+            grid-template-columns: 80px 1fr 300px;
+            height: calc(100vh - 60px);
+        }
+
+        /* Sidebar */
+        .sidebar {
+            background: rgba(15, 20, 35, 0.95);
+            border-right: 1px solid rgba(0, 191, 255, 0.2);
+            display: flex;
+            flex-direction: column;
+            padding: 1rem 0;
+        }
+
+        .tool-section {
+            margin-bottom: 2rem;
+        }
+
+        .section-label {
+            font-size: 0.7rem;
+            color: #7AA3CC;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 0.75rem;
+            padding: 0 1rem;
+        }
+
+        .tool-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 0.75rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border-radius: 8px;
+            margin: 0 0.5rem 0.5rem 0.5rem;
+        }
+
+        .tool-item:hover {
+            background: rgba(0, 191, 255, 0.1);
+        }
+
+        .tool-item.active {
+            background: rgba(0, 191, 255, 0.2);
+            border: 1px solid rgba(0, 191, 255, 0.4);
+        }
+
+        .tool-icon {
+            font-size: 1.25rem;
+            margin-bottom: 0.25rem;
+            color: #00BFFF;
+        }
+
+        .tool-label {
+            font-size: 0.65rem;
+            text-align: center;
+            line-height: 1.2;
+        }
+
+        /* Main Workspace */
+        .workspace {
+            display: flex;
+            flex-direction: column;
+            background: rgba(8, 12, 20, 0.95);
+        }
+
+        /* Upload Area */
+        .upload-area {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px dashed rgba(0, 191, 255, 0.3);
+            border-radius: 16px;
+            margin: 2rem;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            background: rgba(0, 191, 255, 0.02);
+        }
+
+        .upload-area:hover {
+            border-color: rgba(0, 191, 255, 0.6);
+            background: rgba(0, 191, 255, 0.08);
+        }
+
+        .upload-area.dragover {
+            border-color: #00BFFF;
+            background: rgba(0, 191, 255, 0.15);
+        }
+
+        .upload-content {
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .upload-icon {
+            font-size: 4rem;
+            color: #00BFFF;
+            margin-bottom: 1rem;
+        }
+
+        .upload-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: #E6F3FF;
+        }
+
+        .upload-subtitle {
+            color: #7AA3CC;
+            margin-bottom: 1.5rem;
+        }
+
+        .upload-formats {
+            color: #5A7FA0;
+            font-size: 0.9rem;
+        }
+
+        /* Timeline */
+        .timeline {
+            height: 200px;
+            background: rgba(12, 18, 30, 0.95);
+            border-top: 1px solid rgba(0, 191, 255, 0.2);
+            padding: 1rem;
+        }
+
+        .timeline-header {
+            display: flex;
+            justify-content: between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .timeline-label {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: #00BFFF;
+        }
+
+        .timeline-track {
+            height: 60px;
+            background: rgba(0, 191, 255, 0.05);
+            border-radius: 8px;
+            border: 1px solid rgba(0, 191, 255, 0.2);
+        }
+
+        /* Properties Panel */
+        .properties-panel {
+            background: rgba(15, 20, 35, 0.95);
+            border-left: 1px solid rgba(0, 191, 255, 0.2);
+            padding: 1.5rem;
+            overflow-y: auto;
+        }
+
+        .panel-section {
+            margin-bottom: 2rem;
+        }
+
+        .panel-title {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: #00BFFF;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .property-item {
+            background: rgba(0, 191, 255, 0.05);
+            border: 1px solid rgba(0, 191, 255, 0.2);
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 0.75rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .property-item:hover {
+            background: rgba(0, 191, 255, 0.12);
+            border-color: rgba(0, 191, 255, 0.4);
+        }
+
+        .property-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .property-icon {
+            color: #32CD32;
+            font-size: 1rem;
+        }
+
+        .property-name {
+            font-weight: 500;
+            font-size: 0.9rem;
+        }
+
+        .property-description {
+            color: #7AA3CC;
+            font-size: 0.8rem;
+            margin-top: 0.5rem;
+            line-height: 1.4;
+        }
+
+        .property-status {
+            margin-left: auto;
+            font-size: 0.7rem;
+            color: #32CD32;
+            background: rgba(50, 205, 50, 0.2);
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+        }
+
+        /* Travel Specialized Section */
+        .travel-special .property-icon {
+            color: #FFA500;
+        }
+
+        .travel-special .property-status {
+            color: #FFA500;
+            background: rgba(255, 165, 0, 0.2);
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .studio-container {
+                grid-template-columns: 70px 1fr 250px;
+            }
+
+            .properties-panel {
+                padding: 1rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .studio-container {
+                grid-template-columns: 1fr;
+            }
+
+            .sidebar {
+                display: none;
+            }
+
+            .properties-panel {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="background"></div>
+
+    <!-- Header -->
+    <header class="header">
+        <div class="logo">ALLURA Travel Studio</div>
+        <div class="header-controls">
+            <button class="export-btn">Export Video</button>
+            <div class="user-info">
+                <div class="user-avatar" id="user-avatar">T</div>
+                <span id="user-name">@traveler</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Studio Container -->
+    <div class="studio-container">
+        <!-- Sidebar Tools -->
+        <div class="sidebar">
+            <div class="tool-section">
+                <div class="section-label">Import</div>
+                <div class="tool-item active">
+                    <i class="fas fa-upload tool-icon"></i>
+                    <div class="tool-label">Upload</div>
+                </div>
+                <div class="tool-item">
+                    <i class="fas fa-camera tool-icon"></i>
+                    <div class="tool-label">Record</div>
+                </div>
+            </div>
+
+            <div class="tool-section">
+                <div class="section-label">Edit</div>
+                <div class="tool-item">
+                    <i class="fas fa-cut tool-icon"></i>
+                    <div class="tool-label">Cut</div>
+                </div>
+                <div class="tool-item">
+                    <i class="fas fa-magic tool-icon"></i>
+                    <div class="tool-label">Effects</div>
+                </div>
+                <div class="tool-item">
+                    <i class="fas fa-font tool-icon"></i>
+                    <div class="tool-label">Text</div>
+                </div>
+                <div class="tool-item">
+                    <i class="fas fa-music tool-icon"></i>
+                    <div class="tool-label">Audio</div>
+                </div>
+            </div>
+
+            <div class="tool-section">
+                <div class="section-label">Travel</div>
+                <div class="tool-item">
+                    <i class="fas fa-map tool-icon"></i>
+                    <div class="tool-label">Maps</div>
+                </div>
+                <div class="tool-item">
+                    <i class="fas fa-route tool-icon"></i>
+                    <div class="tool-label">Route</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Workspace -->
+        <div class="workspace">
+            <!-- Upload Area -->
+            <div class="upload-area" id="upload-area">
+                <div class="upload-content">
+                    <i class="fas fa-plane upload-icon"></i>
+                    <h3 class="upload-title">Drop your travel footage here</h3>
+                    <p class="upload-subtitle">Or click to browse files</p>
+                    <p class="upload-formats">Supports MP4, AVI, MOV, MKV up to 10GB</p>
+                </div>
+                <input type="file" id="file-input" style="display: none;" accept="video/*" multiple>
+            </div>
+
+            <!-- Timeline -->
+            <div class="timeline">
+                <div class="timeline-header">
+                    <div class="timeline-label">Timeline</div>
+                </div>
+                <div class="timeline-track"></div>
+            </div>
+        </div>
+
+        <!-- Properties Panel -->
+        <div class="properties-panel">
+            <div class="panel-section">
+                <div class="panel-title">Universal Tools</div>
+
+                <div class="property-item">
+                    <div class="property-header">
+                        <i class="fas fa-video property-icon"></i>
+                        <span class="property-name">Content Studio</span>
+                        <span class="property-status">Ready</span>
+                    </div>
+                    <div class="property-description">Professional video editing with AI enhancement</div>
+                </div>
+
+                <div class="property-item">
+                    <div class="property-header">
+                        <i class="fas fa-chart-line property-icon"></i>
+                        <span class="property-name">Analytics</span>
+                        <span class="property-status">Live</span>
+                    </div>
+                    <div class="property-description">Real-time performance tracking</div>
+                </div>
+
+                <div class="property-item">
+                    <div class="property-header">
+                        <i class="fas fa-users property-icon"></i>
+                        <span class="property-name">Audience Manager</span>
+                        <span class="property-status">Active</span>
+                    </div>
+                    <div class="property-description">Demographic insights and targeting</div>
+                </div>
+
+                <div class="property-item">
+                    <div class="property-header">
+                        <i class="fas fa-calendar-alt property-icon"></i>
+                        <span class="property-name">Smart Scheduling</span>
+                        <span class="property-status">Auto</span>
+                    </div>
+                    <div class="property-description">Optimal posting time suggestions</div>
+                </div>
+
+                <div class="property-item">
+                    <div class="property-header">
+                        <i class="fas fa-handshake property-icon"></i>
+                        <span class="property-name">Brand Collabs</span>
+                        <span class="property-status">3 Active</span>
+                    </div>
+                    <div class="property-description">Partnership management</div>
+                </div>
+
+                <div class="property-item">
+                    <div class="property-header">
+                        <i class="fas fa-dollar-sign property-icon"></i>
+                        <span class="property-name">Monetization</span>
+                        <span class="property-status">Tracking</span>
+                    </div>
+                    <div class="property-description">Revenue optimization</div>
+                </div>
+            </div>
+
+            <div class="panel-section travel-special">
+                <div class="panel-title">Travel Specials</div>
+
+                <div class="property-item">
+                    <div class="property-header">
+                        <i class="fas fa-map-marked-alt property-icon"></i>
+                        <span class="property-name">Itinerary Sharing</span>
+                        <span class="property-status">Maps Ready</span>
+                    </div>
+                    <div class="property-description">Share trips with maps and details</div>
+                </div>
+
+                <div class="property-item">
+                    <div class="property-header">
+                        <i class="fas fa-map-pin property-icon"></i>
+                        <span class="property-name">Location Tagging</span>
+                        <span class="property-status">GPS Active</span>
+                    </div>
+                    <div class="property-description">Link posts to map pins</div>
+                </div>
+
+                <div class="property-item">
+                    <div class="property-header">
+                        <i class="fas fa-calculator property-icon"></i>
+                        <span class="property-name">Cost Breakdown</span>
+                        <span class="property-status">Planning</span>
+                    </div>
+                    <div class="property-description">Share trip costs for planning</div>
+                </div>
+
+                <div class="property-item">
+                    <div class="property-header">
+                        <i class="fas fa-bell property-icon"></i>
+                        <span class="property-name">Deal Alerts</span>
+                        <span class="property-status">12 Deals</span>
+                    </div>
+                    <div class="property-description">Notify followers of travel price drops</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Load user data
+        document.addEventListener('DOMContentLoaded', function() {
+            const userData = JSON.parse(localStorage.getItem('allura_user_data') || '{}');
+            const userName = userData.youtube || userData.instagram || '@traveler';
+
+            document.getElementById('user-name').textContent = userName;
+            document.getElementById('user-avatar').textContent = userName.replace('@', '').charAt(0).toUpperCase();
+        });
+
+        // File upload functionality
+        const uploadArea = document.getElementById('upload-area');
+        const fileInput = document.getElementById('file-input');
+
+        uploadArea.addEventListener('click', () => fileInput.click());
+
+        uploadArea.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            uploadArea.classList.add('dragover');
+        });
+
+        uploadArea.addEventListener('dragleave', () => {
+            uploadArea.classList.remove('dragover');
+        });
+
+        uploadArea.addEventListener('drop', (e) => {
+            e.preventDefault();
+            uploadArea.classList.remove('dragover');
+            handleFiles(e.dataTransfer.files);
+        });
+
+        fileInput.addEventListener('change', (e) => {
+            handleFiles(e.target.files);
+        });
+
+        function handleFiles(files) {
+            for (let file of files) {
+                if (file.type.startsWith('video/')) {
+                    alert(`Uploaded: ${file.name}\nSize: ${(file.size / 1024 / 1024).toFixed(2)}MB\n\nFile would be processed and added to timeline.`);
+                }
+            }
+        }
+
+        // Tool selection
+        document.querySelectorAll('.tool-item').forEach(item => {
+            item.addEventListener('click', function() {
+                document.querySelectorAll('.tool-item').forEach(t => t.classList.remove('active'));
+                this.classList.add('active');
+
+                const toolName = this.querySelector('.tool-label').textContent;
+                console.log(`Selected tool: ${toolName}`);
+            });
+        });
+
+        // Property panel interactions
+        document.querySelectorAll('.property-item').forEach(item => {
+            item.addEventListener('click', function() {
+                const propertyName = this.querySelector('.property-name').textContent;
+                alert(`Opening ${propertyName}...\nThis would open the specific tool interface.`);
+            });
+        });
+    </script>
+</body>
+</html>

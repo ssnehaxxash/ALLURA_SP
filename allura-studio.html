@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ALLURA Studio - Content Creator Onboarding</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: #0a0a0a;
+            color: #ffffff;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .container {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            position: relative;
+        }
+
+        .background-pattern {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 20%, rgba(82, 39, 255, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(255, 159, 252, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 40% 60%, rgba(177, 158, 239, 0.05) 0%, transparent 50%);
+            z-index: -1;
+        }
+
+        .onboarding-card {
+            background: rgba(20, 20, 20, 0.9);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 24px;
+            padding: 3rem;
+            max-width: 600px;
+            width: 100%;
+            text-align: center;
+            backdrop-filter: blur(20px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .logo {
+            font-size: 2.5rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #5227FF, #FF9FFC);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.5rem;
+        }
+
+        .subtitle {
+            color: #888;
+            font-size: 1.1rem;
+            margin-bottom: 2.5rem;
+        }
+
+        .step-indicator {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .step {
+            width: 40px;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 2px;
+            transition: all 0.3s ease;
+        }
+
+        .step.active {
+            background: linear-gradient(135deg, #5227FF, #FF9FFC);
+        }
+
+        .form-step {
+            display: none;
+        }
+
+        .form-step.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .step-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .step-description {
+            color: #aaa;
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+
+        .social-inputs {
+            display: grid;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+            text-align: left;
+        }
+
+        .input-group {
+            position: relative;
+        }
+
+        .input-label {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: #ccc;
+        }
+
+        .platform-icon {
+            width: 20px;
+            height: 20px;
+            border-radius: 4px;
+        }
+
+        .platform-icon.youtube { background: #FF0000; }
+        .platform-icon.instagram { background: linear-gradient(45deg, #f09433 0%,#e6683c 25%,#dc2743 50%,#cc2366 75%,#bc1888 100%); }
+        .platform-icon.tiktok { background: #000000; }
+
+        .input-field {
+            width: 100%;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 12px;
+            color: #fff;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .input-field:focus {
+            outline: none;
+            border-color: #5227FF;
+            box-shadow: 0 0 0 3px rgba(82, 39, 255, 0.2);
+        }
+
+        .input-field::placeholder {
+            color: #666;
+        }
+
+        .optional-label {
+            font-size: 0.8rem;
+            color: #666;
+            margin-left: auto;
+        }
+
+        .influencer-types {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .influencer-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .influencer-card:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(82, 39, 255, 0.5);
+            transform: translateY(-2px);
+        }
+
+        .influencer-card.selected {
+            background: rgba(82, 39, 255, 0.2);
+            border-color: #5227FF;
+        }
+
+        .influencer-icon {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: #5227FF;
+        }
+
+        .influencer-name {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .influencer-desc {
+            font-size: 0.8rem;
+            color: #888;
+            line-height: 1.4;
+        }
+
+        .btn {
+            background: linear-gradient(135deg, #5227FF, #FF9FFC);
+            border: none;
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+            margin-top: 1rem;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(82, 39, 255, 0.3);
+        }
+
+        .btn:disabled {
+            background: #333;
+            color: #666;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .btn-back {
+            background: transparent;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: #ccc;
+            margin-right: 1rem;
+            width: auto;
+            min-width: 100px;
+        }
+
+        .btn-back:hover {
+            background: rgba(255, 255, 255, 0.05);
+            transform: none;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .loading.active {
+            display: block;
+        }
+
+        .spinner {
+            border: 3px solid rgba(255, 255, 255, 0.1);
+            border-top: 3px solid #5227FF;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 1rem;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Gaming Studio Special Styling */
+        .loading.gaming {
+            background: linear-gradient(135deg, rgba(255, 107, 107, 0.1), rgba(78, 205, 196, 0.1));
+            border-radius: 16px;
+            padding: 3rem;
+            border: 1px solid rgba(255, 107, 107, 0.2);
+        }
+
+        .loading.gaming .spinner {
+            border-top: 3px solid #FF6B6B;
+        }
+
+        .loading.gaming p {
+            color: #FF6B6B;
+            font-weight: 600;
+        }
+
+        @media (max-width: 768px) {
+            .onboarding-card {
+                padding: 2rem;
+                margin: 1rem;
+            }
+
+            .influencer-types {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .button-group {
+                flex-direction: column;
+            }
+
+            .btn-back {
+                width: 100%;
+                margin-right: 0;
+                margin-bottom: 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .influencer-types {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="background-pattern"></div>
+
+    <div class="container">
+        <div class="onboarding-card">
+            <div class="logo">ALLURA</div>
+            <div class="subtitle">Professional Content Studio</div>
+
+            <div class="step-indicator">
+                <div class="step active" id="step1"></div>
+                <div class="step" id="step2"></div>
+            </div>
+
+            <!-- Step 1: Social Media Handles -->
+            <div class="form-step active" id="form-step-1">
+                <h2 class="step-title">Connect Your Platforms</h2>
+                <p class="step-description">Link your social media accounts to get personalized analytics and cross-platform scheduling.</p>
+
+                <div class="social-inputs">
+                    <div class="input-group">
+                        <label class="input-label" for="youtube-id">
+                            <div class="platform-icon youtube"></div>
+                            YouTube Channel
+                            <span class="optional-label">Required</span>
+                        </label>
+                        <input type="text" id="youtube-id" class="input-field" placeholder="@yourchannel or Channel URL" required />
+                    </div>
+
+                    <div class="input-group">
+                        <label class="input-label" for="instagram-id">
+                            <div class="platform-icon instagram"></div>
+                            Instagram Handle
+                            <span class="optional-label">Optional</span>
+                        </label>
+                        <input type="text" id="instagram-id" class="input-field" placeholder="@yourusername" />
+                    </div>
+
+                    <div class="input-group">
+                        <label class="input-label" for="tiktok-id">
+                            <div class="platform-icon tiktok"></div>
+                            TikTok Handle
+                            <span class="optional-label">Optional</span>
+                        </label>
+                        <input type="text" id="tiktok-id" class="input-field" placeholder="@yourusername" />
+                    </div>
+                </div>
+
+                <button class="btn" onclick="nextStep()">Continue to Studio Setup</button>
+            </div>
+
+            <!-- Step 2: Influencer Type Selection -->
+            <div class="form-step" id="form-step-2">
+                <h2 class="step-title">Choose Your Content Niche</h2>
+                <p class="step-description">Select your primary content type to unlock specialized editing tools and features.</p>
+
+                <div class="influencer-types">
+                    <div class="influencer-card" data-type="gaming" onclick="selectInfluencerType('gaming')">
+                        <div class="influencer-icon"><i class="fas fa-gamepad"></i></div>
+                        <div class="influencer-name">Gaming</div>
+                        <div class="influencer-desc">Gameplay, reviews, streaming</div>
+                    </div>
+
+                    <div class="influencer-card" data-type="travel" onclick="selectInfluencerType('travel')">
+                        <div class="influencer-icon"><i class="fas fa-plane"></i></div>
+                        <div class="influencer-name">Travel</div>
+                        <div class="influencer-desc">Vlogs, destinations, guides</div>
+                    </div>
+
+                    <div class="influencer-card" data-type="fashion" onclick="selectInfluencerType('fashion')">
+                        <div class="influencer-icon"><i class="fas fa-tshirt"></i></div>
+                        <div class="influencer-name">Fashion</div>
+                        <div class="influencer-desc">Style, lookbooks, hauls</div>
+                    </div>
+
+                    <div class="influencer-card" data-type="finance" onclick="selectInfluencerType('finance')">
+                        <div class="influencer-icon"><i class="fas fa-chart-line"></i></div>
+                        <div class="influencer-name">Finance</div>
+                        <div class="influencer-desc">Investing, crypto, tips</div>
+                    </div>
+
+                    <div class="influencer-card" data-type="beauty" onclick="selectInfluencerType('beauty')">
+                        <div class="influencer-icon"><i class="fas fa-palette"></i></div>
+                        <div class="influencer-name">Beauty</div>
+                        <div class="influencer-desc">Makeup, skincare, reviews</div>
+                    </div>
+
+                    <div class="influencer-card" data-type="tech" onclick="selectInfluencerType('tech')">
+                        <div class="influencer-icon"><i class="fas fa-microchip"></i></div>
+                        <div class="influencer-name">Tech</div>
+                        <div class="influencer-desc">Reviews, tutorials, news</div>
+                    </div>
+
+                    <div class="influencer-card" data-type="universal" onclick="selectInfluencerType('universal')">
+                        <div class="influencer-icon"><i class="fas fa-star"></i></div>
+                        <div class="influencer-name">Universal</div>
+                        <div class="influencer-desc">Multi-niche content</div>
+                    </div>
+                </div>
+
+                <div class="button-group">
+                    <button class="btn btn-back" onclick="prevStep()">Back</button>
+                    <button class="btn" id="enter-studio-btn" onclick="enterStudio()" disabled>Launch Studio</button>
+                </div>
+            </div>
+
+            <!-- Loading State -->
+            <div class="loading" id="loading">
+                <div class="spinner"></div>
+                <p>Setting up your professional studio workspace...</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentStep = 1;
+        let selectedInfluencerType = null;
+        let userData = {};
+
+        function nextStep() {
+            const youtubeInput = document.getElementById('youtube-id');
+            const instagramInput = document.getElementById('instagram-id');
+            const tiktokInput = document.getElementById('tiktok-id');
+
+            userData.youtube = youtubeInput.value.trim();
+            userData.instagram = instagramInput.value.trim();
+            userData.tiktok = tiktokInput.value.trim();
+
+            if (!userData.youtube) {
+                alert('YouTube channel is required to continue');
+                youtubeInput.focus();
+                return;
+            }
+
+            // Format handles
+            if (userData.instagram && !userData.instagram.startsWith('@')) {
+                userData.instagram = '@' + userData.instagram;
+                instagramInput.value = userData.instagram;
+            }
+
+            if (userData.tiktok && !userData.tiktok.startsWith('@')) {
+                userData.tiktok = '@' + userData.tiktok;
+                tiktokInput.value = userData.tiktok;
+            }
+
+            currentStep = 2;
+            updateSteps();
+        }
+
+        function prevStep() {
+            currentStep = 1;
+            selectedInfluencerType = null;
+            updateSteps();
+
+            // Clear selections
+            document.querySelectorAll('.influencer-card').forEach(card => {
+                card.classList.remove('selected');
+            });
+            document.getElementById('enter-studio-btn').disabled = true;
+        }
+
+        function updateSteps() {
+            // Update step indicators
+            document.querySelectorAll('.step').forEach((step, index) => {
+                if (index + 1 <= currentStep) {
+                    step.classList.add('active');
+                } else {
+                    step.classList.remove('active');
+                }
+            });
+
+            // Show/hide form steps
+            document.querySelectorAll('.form-step').forEach((step, index) => {
+                if (index + 1 === currentStep) {
+                    step.classList.add('active');
+                } else {
+                    step.classList.remove('active');
+                }
+            });
+        }
+
+        function selectInfluencerType(type) {
+            selectedInfluencerType = type;
+
+            // Update UI
+            document.querySelectorAll('.influencer-card').forEach(card => {
+                card.classList.remove('selected');
+            });
+
+            document.querySelector(`[data-type="${type}"]`).classList.add('selected');
+            document.getElementById('enter-studio-btn').disabled = false;
+        }
+
+        function enterStudio() {
+            if (!selectedInfluencerType) {
+                alert('Please select your content niche');
+                return;
+            }
+
+            // Show loading with special styling for gaming
+            document.querySelectorAll('.form-step').forEach(step => {
+                step.classList.remove('active');
+            });
+            
+            const loadingDiv = document.getElementById('loading');
+            loadingDiv.classList.add('active');
+            
+            // Add special gaming styling
+            if (selectedInfluencerType === 'gaming') {
+                loadingDiv.classList.add('gaming');
+                loadingDiv.innerHTML = `
+                    <div class="spinner"></div>
+                    <p>🎮 Loading ALLURA Gaming Studio...</p>
+                    <p style="font-size: 0.9rem; color: #4ECDC4; margin-top: 1rem;">Professional video editing for content creators</p>
+                `;
+            }
+
+            // Store user data
+            userData.influencerType = selectedInfluencerType;
+            localStorage.setItem('allura_user_data', JSON.stringify(userData));
+
+            // Redirect after 2 seconds
+            setTimeout(() => {
+                if (selectedInfluencerType === 'gaming') {
+                    // Redirect to your localhost gaming studio
+                    window.location.href = 'http://localhost:3000'; // ← Your React app URL
+                } else {
+                    // For other types, redirect to placeholder pages
+                    const studioPages = {
+                        travel: 'travel-studio.html',
+                        fashion: 'fashion-studio.html',
+                        finance: 'finance-studio.html',
+                        beauty: 'beauty-studio.html',
+                        tech: 'tech-studio.html',
+                        universal: 'universal-studio.html'
+                    };
+                    
+                    // You can create simple placeholder pages or redirect to the main studio too
+                    window.location.href = studioPages[selectedInfluencerType] || 'http://localhost:3000';
+                }
+            }, 2500); // Slightly longer for better UX
+        }
+
+        // Auto-focus and keyboard shortcuts
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('youtube-id').focus();
+
+            // Allow Enter key to proceed
+            document.querySelectorAll('.input-field').forEach(input => {
+                input.addEventListener('keypress', function(e) {
+                    if (e.key === 'Enter' && currentStep === 1) {
+                        nextStep();
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

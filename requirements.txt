@@ -1,0 +1,41 @@
+# ALLURA Gaming Studio - Requirements
+# Note: This is primarily a JavaScript/Node.js project
+
+# Core Dependencies (JavaScript/Node.js)
+react@19.0.0
+next@15.0.0
+typescript@5.0.0
+tailwindcss@3.4.0
+zustand@4.5.0
+
+# Video Processing Libraries
+@ffmpeg/ffmpeg@0.12.7
+@ffmpeg/util@0.12.1
+
+# AI & ML Libraries  
+openai-whisper-web@1.0.0
+tensorflow@4.10.0
+
+# Development Tools
+eslint@8.50.0
+prettier@3.0.0
+@types/react@18.2.0
+@types/node@20.5.0
+
+# Build & Deployment
+vercel@32.0.0
+webpack@5.88.0
+
+# Additional Utilities
+uuid@9.0.0
+date-fns@2.30.0
+clsx@2.0.0
+
+# Python Equivalents (for reference)
+# If implementing AI features in Python:
+# openai-whisper==20231117
+# opencv-python==4.8.1
+# numpy==1.24.3
+# tensorflow==2.13.0
+# flask==2.3.3
+# fastapi==0.103.0

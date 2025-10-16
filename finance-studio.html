@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ALLURA Studio - Finance Creator</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="fstyles.css">
+</head>
+<body>
+    <div class="background"></div>
+
+    <!-- Header -->
+    <header class="header">
+        <div class="logo">ALLURA Finance Studio</div>
+        <div class="header-controls">
+            <button class="export-btn">Export Video</button>
+            <div class="user-info">
+                <div class="user-avatar" id="user-avatar">F</div>
+                <span id="user-name">@financeexpert</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Studio Container -->
+    <div class="studio-container">
+        <!-- Sidebar Tools -->
+        <div class="sidebar">
+            <div class="tool-section">
+                <div class="section-label">Import</div>
+                <div class="tool-item active">
+                    <i class="fas fa-upload tool-icon"></i>
+                    <div class="tool-label">Upload</div>
+                </div>
+                <div class="tool-item">
+                    <i class="fas fa-microphone tool-icon"></i>
+                    <div class="tool-label">Record</div>
+                </div>
+            </div>
+
+            <div class="tool-section">
+                <div class="section-label">Edit</div>
+                <div class="tool-item">
+                    <i class="fas fa-cut tool-icon"></i>
+                    <div class="tool-label">Cut</div>
+                </div>
+                <div class="tool-item">
+                    <i class="fas fa-magic tool-icon"></i>
+                    <div class="tool-label">Effects</div>
+                </div>
+                <div class="tool-item">
+                    <i class="fas fa-font tool-icon"></i>
+                    <div class="tool-label">Text</div>
+                </div>
+                <div class="tool-item">
+                    <i class="fas fa-music tool-icon"></i>
+                    <div class="tool-label">Audio</div>
+                </div>
+            </div>
+
+            <div class="tool-section">
+                <div class="section-label">Finance</div>
+                <div class="tool-item">
+                    <i class="fas fa-calculator tool-icon"></i>
+                    <div class="tool-label">Calc</div>
+                </div>
+                <div class="tool-item">
+                    <i class="fas fa-chart-pie tool-icon"></i>
+                    <div class="tool-label">Charts</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Workspace -->
+        <div class="workspace">
+            <!-- Upload Area -->
+            <div class="upload-area" id="upload-area">
+                <div class="upload-content">
+                    <i class="fas fa-chart-line upload-icon"></i>
+                    <h3 class="upload-title">Drop your financial content here</h3>
+                    <p class="upload-subtitle">Or click to browse files</p>
+                    <p class="upload-formats">Supports MP4, AVI, MOV, MKV up to 10GB</p>
+                </div>
+                <input type="file" id="file-input" style="display: none;" accept="video/*" multiple>
+            </div>
+
+            <!-- Timeline -->
+            <div class="timeline">
+                <div class="timeline-header">
+                    <div class="timeline-label">Timeline</div>
+                </div>
+                <div class="timeline-track"></div>
+            </div>
+        </div>
+
+        <!-- Properties Panel -->
+        <div class="properties-panel">
+            <div class="panel-section">
+                <div class="panel-title">Universal Tools</div>
+
+                <div class="property-item">
+                    <div class="property-header">
+                        <i class="fas fa-video property-icon"></i>
+                        <span class="property-name">Content Studio</span>
+                        <span class="property-status">Ready</span>
+                    </div>
+                    <div class="property-description">Professional video editing with AI enhancement</div>
+                </div>
+
+                <div class="property-item">
+                    <div class="property-header">
+                        <i class="fas fa-chart-line property-icon"></i>
+                        <span class="property-name">Analytics</span>
+                        <span class="property-status">Live</span>
+                    </div>
+                    <div class="property-description">Real-time performance tracking</div>
+                </div>
+
+                <div class="property-item">
+                    <div class="property-header">
+                        <i class="fas fa-users property-icon"></i>
+                        <span class="property-name">Audience Manager</span>
+                        <span class="property-status">Active</span>
+                    </div>
+                    <div class="property-description">Demographic insights and targeting</div>
+                </div>
+
+                <div class="property-item">
+                    <div class="property-header">
+                        <i class="fas fa-calendar-alt property-icon"></i>
+                        <span class="property-name">Smart Scheduling</span>
+                        <span class="property-status">Auto</span>
+                    </div>
+                    <div class="property-description">Optimal posting time suggestions</div>
+                </div>
+
+                <div class="property-item">
+                    <div class="property-header">
+                        <i class="fas fa-handshake property-icon"></i>
+                        <span class="property-name">Brand Collabs</span>
+                        <span class="property-status">4 Active</span>
+                    </div>
+                    <div class="property-description">Partnership management</div>
+                </div>
+
+                <div class="property-item">
+                    <div class="property-header">
+                        <i class="fas fa-dollar-sign property-icon"></i>
+                        <span class="property-name">Monetization</span>
+                        <span class="property-status">Tracking</span>
+                    </div>
+                    <div class="property-description">Revenue optimization</div>
+                </div>
+            </div>
+
+            <div class="panel-section finance-special">
+                <div class="panel-title">Finance Specials</div>
+
+                <div class="property-item">
+                    <div class="property-header">
+                        <i class="fas fa-calculator property-icon"></i>
+                        <span class="property-name">Financial Calculators</span>
+                        <span class="property-status">ROI Ready</span>
+                    </div>
+                    <div class="property-description">Compute ROI, loans, and savings</div>
+                </div>
+
+                <div class="property-item">
+                    <div class="property-header">
+                        <i class="fas fa-chart-pie property-icon"></i>
+                        <span class="property-name">Portfolio Simulation</span>
+                        <span class="property-status">Testing</span>
+                    </div>
+                    <div class="property-description">Test investment strategies</div>
+                </div>
+
+                <div class="property-item">
+                    <div class="property-header">
+                        <i class="fas fa-bell property-icon"></i>
+                        <span class="property-name">Market Alerts</span>
+                        <span class="property-status">15 Active</span>
+                    </div>
+                    <div class="property-description">Track stock, crypto, and real estate trends</div>
+                </div>
+
+                <div class="property-item">
+                    <div class="property-header">
+                        <i class="fas fa-shield-alt property-icon"></i>
+                        <span class="property-name">Secure Sharing</span>
+                        <span class="property-status">Encrypted</span>
+                    </div>
+                    <div class="property-description">Share financial files safely</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="fscript.js"></script>
+</body>
+</html>

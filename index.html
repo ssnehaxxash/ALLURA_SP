@@ -1,0 +1,1373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ALLURA - Elevate Your Content Creation</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    /* Reset and Base Styles */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      line-height: 1.6;
+      color: #333;
+      overflow-x: hidden;
+      background: #000;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    /* Gradient Blinds Background Container */
+    .gradient-blinds-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: -1;
+      overflow: hidden;
+    }
+
+    #gradientCanvas {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    /* Navigation */
+    .navbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(15px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+      z-index: 1000;
+      padding: 1rem 0;
+      transition: all 0.3s ease;
+    }
+
+    .nav-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .nav-logo .logo-text {
+      font-size: 1.8rem;
+      font-weight: 900;
+      background: linear-gradient(135deg, #5227FF, #FF9FFC);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      text-shadow: 0 0 20px rgba(82, 39, 255, 0.5);
+    }
+
+    .nav-menu {
+      display: flex;
+      gap: 2rem;
+    }
+
+    .nav-link {
+      text-decoration: none;
+      color: #333;
+      font-weight: 500;
+      transition: color 0.3s ease;
+      position: relative;
+    }
+
+    .nav-link:hover {
+      color: #5227FF;
+    }
+
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      width: 0;
+      height: 2px;
+      bottom: -5px;
+      left: 0;
+      background: linear-gradient(135deg, #5227FF, #FF9FFC);
+      transition: width 0.3s ease;
+    }
+
+    .nav-link:hover::after {
+      width: 100%;
+    }
+
+    .nav-auth {
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+    }
+
+    .btn-secondary {
+      background: transparent;
+      border: 2px solid #5227FF;
+      color: #5227FF;
+      padding: 0.5rem 1.5rem;
+      border-radius: 50px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .btn-secondary:hover {
+      background: #5227FF;
+      color: white;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #5227FF, #FF9FFC);
+      border: none;
+      color: white;
+      padding: 0.5rem 1.5rem;
+      border-radius: 50px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: transform 0.3s ease;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 25px rgba(82, 39, 255, 0.3);
+    }
+
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      cursor: pointer;
+      gap: 4px;
+    }
+
+    .hamburger span {
+      width: 25px;
+      height: 3px;
+      background: #333;
+      border-radius: 2px;
+      transition: 0.3s ease;
+    }
+
+    /* Hero Section */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 120px 20px 80px;
+      position: relative;
+      z-index: 10;
+    }
+
+    .hero-content {
+      max-width: 800px;
+    }
+
+    /* ALLURA Text - Clean and Clear */
+    .animated-text {
+      font-size: 5rem;
+      font-weight: 900;
+      background: linear-gradient(135deg, #FFFFFF 0%, #5227FF 25%, #FF9FFC 50%, #B19EEF 75%, #FFFFFF 100%);
+      background-size: 200% 200%;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      display: block;
+      margin-bottom: 1rem;
+      letter-spacing: -2px;
+      -webkit-font-smoothing: antialiased;
+      filter: drop-shadow(0 0 30px rgba(255, 255, 255, 0.8)) 
+              drop-shadow(0 0 60px rgba(82, 39, 255, 0.6));
+      animation: gradientShift 6s ease-in-out infinite;
+    }
+
+    @keyframes gradientShift {
+      0% { background-position: 0% 50%; }
+      25% { background-position: 100% 50%; }
+      50% { background-position: 50% 100%; }
+      75% { background-position: 100% 0%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    .hero-subtitle {
+      font-size: 1.6rem;
+      font-weight: 600;
+      color: rgba(255, 255, 255, 0.95);
+      margin-bottom: 1rem;
+      text-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
+    }
+
+    .hero-description {
+      font-size: 1.1rem;
+      color: rgba(255, 255, 255, 0.85);
+      max-width: 600px;
+      margin: 0 auto 3rem;
+      line-height: 1.7;
+      text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 1.5rem;
+      justify-content: center;
+      margin-bottom: 4rem;
+      flex-wrap: wrap;
+    }
+
+    .btn-hero-primary {
+      background: linear-gradient(135deg, #5227FF, #FF9FFC);
+      border: none;
+      color: white;
+      padding: 1rem 2.5rem;
+      border-radius: 50px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 8px 25px rgba(82, 39, 255, 0.3);
+    }
+
+    .btn-hero-primary:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 15px 35px rgba(82, 39, 255, 0.4);
+    }
+
+    .btn-hero-secondary {
+      background: rgba(255, 255, 255, 0.15);
+      border: 2px solid rgba(255, 255, 255, 0.4);
+      color: white;
+      padding: 1rem 2.5rem;
+      border-radius: 50px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      cursor: pointer;
+      backdrop-filter: blur(10px);
+      transition: all 0.3s ease;
+    }
+
+    .btn-hero-secondary:hover {
+      background: rgba(255, 255, 255, 0.25);
+      transform: translateY(-3px);
+    }
+
+    .hero-stats {
+      display: flex;
+      justify-content: center;
+      gap: 3rem;
+      flex-wrap: wrap;
+    }
+
+    .stat-item {
+      text-align: center;
+    }
+
+    .stat-number {
+      display: block;
+      font-size: 2.8rem;
+      font-weight: 800;
+      color: white;
+      text-shadow: 0 0 20px rgba(255, 255, 255, 0.6);
+    }
+
+    .stat-label {
+      font-size: 0.9rem;
+      color: rgba(255, 255, 255, 0.8);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      font-weight: 500;
+    }
+
+    /* Sections */
+    section {
+      padding: 100px 0;
+      position: relative;
+      z-index: 5;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    .section-header {
+      text-align: center;
+      margin-bottom: 4rem;
+    }
+
+    .section-title {
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: white;
+      margin-bottom: 1rem;
+      text-shadow: 0 0 25px rgba(255, 255, 255, 0.4);
+    }
+
+    .section-subtitle {
+      font-size: 1.2rem;
+      color: rgba(255, 255, 255, 0.85);
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    /* Features Section */
+    .features {
+      background: rgba(0, 0, 0, 0.2);
+      backdrop-filter: blur(10px);
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 2rem;
+    }
+
+    .feature-card {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(15px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 20px;
+      padding: 2.5rem 2rem;
+      text-align: center;
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+
+    .feature-card:hover {
+      transform: translateY(-10px);
+      background: rgba(255, 255, 255, 0.15);
+      box-shadow: 0 20px 40px rgba(82, 39, 255, 0.2);
+    }
+
+    .feature-icon {
+      width: 80px;
+      height: 80px;
+      margin: 0 auto 1.5rem;
+      background: linear-gradient(135deg, #5227FF, #FF9FFC);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 2rem;
+      box-shadow: 0 10px 25px rgba(82, 39, 255, 0.3);
+    }
+
+    .feature-card h3 {
+      font-size: 1.4rem;
+      color: white;
+      margin-bottom: 1rem;
+      font-weight: 600;
+    }
+
+    .feature-card p {
+      color: rgba(255, 255, 255, 0.85);
+      line-height: 1.6;
+    }
+
+    /* Categories Section */
+    .categories {
+      background: rgba(0, 0, 0, 0.15);
+      backdrop-filter: blur(10px);
+    }
+
+    .categories-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+    }
+
+    .category-card {
+      background: rgba(255, 255, 255, 0.08);
+      backdrop-filter: blur(15px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 20px;
+      padding: 2.5rem 2rem;
+      text-align: center;
+      transition: all 0.3s ease;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .category-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, rgba(82, 39, 255, 0.1), rgba(255, 159, 252, 0.1));
+      transition: left 0.5s ease;
+    }
+
+    .category-card:hover::before {
+      left: 0;
+    }
+
+    .category-card:hover {
+      transform: translateY(-10px) scale(1.02);
+      box-shadow: 0 25px 50px rgba(82, 39, 255, 0.3);
+    }
+
+    .category-icon {
+      width: 70px;
+      height: 70px;
+      margin: 0 auto 1.5rem;
+      background: linear-gradient(135deg, #5227FF, #FF9FFC);
+      border-radius: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 1.8rem;
+      position: relative;
+      z-index: 2;
+    }
+
+    .category-card h3 {
+      font-size: 1.3rem;
+      color: white;
+      margin-bottom: 1rem;
+      font-weight: 600;
+      position: relative;
+      z-index: 2;
+    }
+
+    .category-card p {
+      color: rgba(255, 255, 255, 0.85);
+      margin-bottom: 1.5rem;
+      position: relative;
+      z-index: 2;
+    }
+
+    .btn-category {
+      background: transparent;
+      border: 2px solid rgba(255, 255, 255, 0.3);
+      color: white;
+      padding: 0.7rem 1.5rem;
+      border-radius: 50px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      position: relative;
+      z-index: 2;
+    }
+
+    .btn-category:hover {
+      background: rgba(255, 255, 255, 0.1);
+      border-color: rgba(255, 255, 255, 0.5);
+      transform: translateY(-2px);
+    }
+
+    /* CTA Section */
+    .cta {
+      background: rgba(0, 0, 0, 0.3);
+      backdrop-filter: blur(15px);
+      text-align: center;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .cta-content h2 {
+      font-size: 2.5rem;
+      color: white;
+      margin-bottom: 1rem;
+      font-weight: 700;
+      text-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+    }
+
+    .cta-content p {
+      font-size: 1.2rem;
+      color: rgba(255, 255, 255, 0.85);
+      margin-bottom: 2.5rem;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .cta-actions {
+      display: flex;
+      gap: 1.5rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .btn-cta-primary {
+      background: linear-gradient(135deg, #5227FF, #FF9FFC);
+      border: none;
+      color: white;
+      padding: 1rem 2.5rem;
+      border-radius: 50px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .btn-cta-primary:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 15px 35px rgba(82, 39, 255, 0.4);
+    }
+
+    .btn-cta-secondary {
+      background: transparent;
+      border: 2px solid rgba(255, 255, 255, 0.3);
+      color: white;
+      padding: 1rem 2.5rem;
+      border-radius: 50px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .btn-cta-secondary:hover {
+      background: rgba(255, 255, 255, 0.1);
+      transform: translateY(-3px);
+    }
+
+    /* Footer */
+    .footer {
+      background: rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(15px);
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 3rem 0 1rem;
+    }
+
+    .footer-content {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 2rem;
+      margin-bottom: 2rem;
+    }
+
+    .footer-section h3,
+    .footer-section h4 {
+      color: white;
+      margin-bottom: 1rem;
+      font-weight: 600;
+    }
+
+    .footer-section h3 {
+      font-size: 1.5rem;
+      background: linear-gradient(135deg, #5227FF, #FF9FFC);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .footer-section p {
+      color: rgba(255, 255, 255, 0.85);
+      margin-bottom: 1.5rem;
+      line-height: 1.6;
+    }
+
+    .footer-section a {
+      display: block;
+      color: rgba(255, 255, 255, 0.7);
+      text-decoration: none;
+      margin-bottom: 0.5rem;
+      transition: color 0.3s ease;
+    }
+
+    .footer-section a:hover {
+      color: #5227FF;
+    }
+
+    .social-links {
+      display: flex;
+      gap: 1rem;
+    }
+
+    .social-links a {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 50%;
+      color: white;
+      text-decoration: none;
+      transition: all 0.3s ease;
+    }
+
+    .social-links a:hover {
+      background: linear-gradient(135deg, #5227FF, #FF9FFC);
+      transform: translateY(-2px);
+    }
+
+    .footer-bottom {
+      text-align: center;
+      padding-top: 2rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      color: rgba(255, 255, 255, 0.6);
+    }
+
+    /* Status Indicator */
+    .bg-status {
+      position: fixed;
+      top: 90px;
+      right: 20px;
+      background: rgba(0, 200, 0, 0.9);
+      color: white;
+      padding: 8px 15px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: bold;
+      z-index: 10000;
+      opacity: 1;
+      transition: opacity 0.3s ease;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .animated-text {
+        font-size: 3.5rem;
+        letter-spacing: -2px;
+      }
+
+      .nav-menu {
+        position: fixed;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(10px);
+        flex-direction: column;
+        padding: 2rem;
+        text-align: center;
+        transform: translateY(-100%);
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.3s ease;
+        z-index: 999;
+      }
+
+      .nav-menu.active {
+        transform: translateY(0);
+        opacity: 1;
+        visibility: visible;
+      }
+
+      .hamburger {
+        display: flex;
+      }
+
+      .hamburger.active span:nth-child(1) {
+        transform: rotate(-45deg) translate(-5px, 6px);
+      }
+
+      .hamburger.active span:nth-child(2) {
+        opacity: 0;
+      }
+
+      .hamburger.active span:nth-child(3) {
+        transform: rotate(45deg) translate(-5px, -6px);
+      }
+
+      .hero-actions {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .hero-stats {
+        gap: 2rem;
+      }
+
+      .section-title {
+        font-size: 2rem;
+      }
+
+      .features-grid,
+      .categories-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .animated-text {
+        font-size: 2.8rem;
+        letter-spacing: -1px;
+      }
+
+      .hero-subtitle {
+        font-size: 1.3rem;
+      }
+
+      .hero-description {
+        font-size: 1rem;
+      }
+
+      .section-title {
+        font-size: 1.8rem;
+      }
+
+      .btn-hero-primary,
+      .btn-hero-secondary {
+        width: 100%;
+        max-width: 300px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Gradient Blinds Background -->
+  <div class="gradient-blinds-container" id="backgroundContainer">
+    <canvas id="gradientCanvas"></canvas>
+  </div>
+
+  <!-- Background Status Indicator -->
+  <div class="bg-status" id="bgStatus">🌊 Interactive Background Active</div>
+
+  <!-- Navigation -->
+  <nav class="navbar">
+    <div class="nav-container">
+      <div class="nav-logo">
+        <span class="logo-text">ALLURA</span>
+      </div>
+      <div class="nav-menu" id="nav-menu">
+        <a href="#home" class="nav-link">Home</a>
+        <a href="#features" class="nav-link">Features</a>
+        <a href="#analytics" class="nav-link">Analytics</a>
+        <a href="#tools" class="nav-link">Tools</a>
+        <a href="#pricing" class="nav-link">Pricing</a>
+        <a href="#contact" class="nav-link">Contact</a>
+      </div>
+      <div class="nav-auth">
+        <button class="btn-secondary">Sign In</button>
+        <a href="allura-studio.html">
+          <button class="btn-primary">Get Started</button>
+        </a>
+      </div>
+      <div class="hamburger" id="hamburger">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section id="home" class="hero">
+    <div class="hero-content">
+      <div class="hero-title-container">
+        <h1 class="hero-title">
+          <span class="animated-text">ALLURA</span>
+        </h1>
+        <p class="hero-subtitle">Elevate Your Content Creation Journey</p>
+        <div class="hero-description">
+          <p>The ultimate platform for content creators across gaming, travel, fashion, finance, beauty, and tech. Create, collaborate, and shine with powerful tools designed for modern influencers.</p>
+        </div>
+      </div>
+      <div class="hero-actions">
+        <a href="allura-studio.html">
+          <button class="btn-hero-primary">Start Creating</button>
+        </a>
+        <button class="btn-hero-secondary">Watch Demo</button>
+      </div>
+      <div class="hero-stats">
+        <div class="stat-item">
+          <span class="stat-number">50K+</span>
+          <span class="stat-label">Creators</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-number">2M+</span>
+          <span class="stat-label">Content Pieces</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-number">150+</span>
+          <span class="stat-label">Countries</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Features Section -->
+  <section id="features" class="features">
+    <div class="container">
+      <div class="section-header">
+        <h2 class="section-title">Powerful Features for Every Creator</h2>
+        <p class="section-subtitle">Everything you need to create, manage, and monetize your content</p>
+      </div>
+
+      <div class="features-grid">
+        <div class="feature-card">
+          <div class="feature-icon">
+            <i class="fas fa-video"></i>
+          </div>
+          <h3>Content Studio</h3>
+          <p>Advanced video editing, image enhancement, and content scheduling tools in one place.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">
+            <i class="fas fa-chart-line"></i>
+          </div>
+          <h3>Analytics Dashboard</h3>
+          <p>Track engagement, audience growth, and revenue streams with detailed insights.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">
+            <i class="fas fa-users"></i>
+          </div>
+          <h3>Audience Manager</h3>
+          <p>Understand your audience with demographic insights and engagement patterns.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">
+            <i class="fas fa-dollar-sign"></i>
+          </div>
+          <h3>Monetization Hub</h3>
+          <p>Multiple revenue streams: sponsorships, affiliate marketing, and direct sales.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">
+            <i class="fas fa-calendar-alt"></i>
+          </div>
+          <h3>Content Calendar</h3>
+          <p>Plan, schedule, and auto-publish content across all your social platforms.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">
+            <i class="fas fa-handshake"></i>
+          </div>
+          <h3>Brand Collaborations</h3>
+          <p>Connect with brands, manage partnerships, and track campaign performance.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Categories Section -->
+  <section id="categories" class="categories">
+    <div class="container">
+      <div class="section-header">
+        <h2 class="section-title">Specialized for Your Niche</h2>
+        <p class="section-subtitle">Tailored tools and features for different content categories</p>
+      </div>
+      <div class="categories-grid">
+        <div class="category-card" data-category="gaming">
+          <div class="category-icon">
+            <i class="fas fa-gamepad"></i>
+          </div>
+          <h3>Gaming</h3>
+          <p>Streaming tools, game analytics, tournament management</p>
+          <button class="btn-category">Explore Gaming</button>
+        </div>
+        <div class="category-card" data-category="travel">
+          <div class="category-icon">
+            <i class="fas fa-plane"></i>
+          </div>
+          <h3>Travel</h3>
+          <p>Location tracking, itinerary planning, travel partnerships</p>
+          <button class="btn-category">Explore Travel</button>
+        </div>
+        <div class="category-card" data-category="fashion">
+          <div class="category-icon">
+            <i class="fas fa-tshirt"></i>
+          </div>
+          <h3>Fashion</h3>
+          <p>Style analytics, brand partnerships, outfit planning</p>
+          <button class="btn-category">Explore Fashion</button>
+        </div>
+        <div class="category-card" data-category="finance">
+          <div class="category-icon">
+            <i class="fas fa-chart-pie"></i>
+          </div>
+          <h3>Finance</h3>
+          <p>Investment tracking, financial education tools, crypto insights</p>
+          <button class="btn-category">Explore Finance</button>
+        </div>
+        <div class="category-card" data-category="beauty">
+          <div class="category-icon">
+            <i class="fas fa-palette"></i>
+          </div>
+          <h3>Beauty</h3>
+          <p>Product reviews, tutorials, beauty brand collaborations</p>
+          <button class="btn-category">Explore Beauty</button>
+        </div>
+        <div class="category-card" data-category="tech">
+          <div class="category-icon">
+            <i class="fas fa-microchip"></i>
+          </div>
+          <h3>Tech</h3>
+          <p>Product reviews, tutorials, tech news and trends</p>
+          <button class="btn-category">Explore Tech</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section class="cta">
+    <div class="container">
+      <div class="cta-content">
+        <h2>Ready to Elevate Your Content?</h2>
+        <p>Join thousands of creators who are already growing their audience and revenue with ALLURA</p>
+        <div class="cta-actions">
+          <a href="allura-studio.html">
+            <button class="btn-cta-primary">Start Free Trial</button>
+          </a>
+          <button class="btn-cta-secondary">Schedule Demo</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-section">
+          <h3>ALLURA</h3>
+          <p>Empowering content creators to build, grow, and monetize their digital presence.</p>
+          <div class="social-links">
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-instagram"></i></a>
+            <a href="#"><i class="fab fa-linkedin"></i></a>
+            <a href="#"><i class="fab fa-youtube"></i></a>
+          </div>
+        </div>
+        <div class="footer-section">
+          <h4>Platform</h4>
+          <a href="#">Features</a>
+          <a href="#">Analytics</a>
+          <a href="#">Tools</a>
+          <a href="#">Pricing</a>
+        </div>
+        <div class="footer-section">
+          <h4>Creators</h4>
+          <a href="#">Gaming</a>
+          <a href="#">Travel</a>
+          <a href="#">Fashion</a>
+          <a href="#">Finance</a>
+          <a href="#">Beauty</a>
+          <a href="#">Tech</a>
+        </div>
+        <div class="footer-section">
+          <h4>Support</h4>
+          <a href="#">Help Center</a>
+          <a href="#">Contact Us</a>
+          <a href="#">Community</a>
+          <a href="#">API Docs</a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2025 ALLURA. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Integrated Gradient Blinds JavaScript -->
+  <script>
+    class AlluraGradientBlinds {
+      constructor(container) {
+        this.container = container;
+        this.canvas = document.getElementById('gradientCanvas');
+        this.gl = this.canvas.getContext('webgl') || this.canvas.getContext('experimental-webgl');
+
+        if (!this.gl) {
+          console.error('WebGL not supported');
+          return;
+        }
+
+        this.mouseTarget = [0, 0];
+        this.mouse = [0, 0];
+        this.lastTime = 0;
+        this.time = 0;
+        this.paused = false;
+
+        // Fixed parameters based on your settings
+        this.params = {
+          angle: 0,                    // From your image: 0°
+          noise: 0.2,                  // From your image: 0.2
+          blindCount: 40,              // From your image: 40
+          spotlightRadius: 0.3,        // From your image: 0.3
+          spotlightSoftness: 1,
+          spotlightOpacity: 1,
+          mirrorGradient: false,
+          distortAmount: 0,            // From your image: 0
+          mouseDampening: 0.15,
+          colors: ['#5227FF', '#FF9FFC', '#B19EEF', '#4ECDC4', '#45B7D1', '#96CEB4']
+        };
+
+        this.init();
+        this.setupEventListeners();
+        this.resize();
+        this.animate();
+      }
+
+      init() {
+        const gl = this.gl;
+
+        // Vertex shader
+        const vertexShader = this.createShader(gl.VERTEX_SHADER, `
+          attribute vec2 a_position;
+          varying vec2 vUv;
+
+          void main() {
+            vUv = a_position * 0.5 + 0.5;
+            gl_Position = vec4(a_position, 0.0, 1.0);
+          }
+        `);
+
+        // Fragment shader
+        const fragmentShader = this.createShader(gl.FRAGMENT_SHADER, `
+          #ifdef GL_ES
+          precision mediump float;
+          #endif
+
+          uniform vec3  iResolution;
+          uniform vec2  iMouse;
+          uniform float iTime;
+          uniform float uAngle;
+          uniform float uNoise;
+          uniform float uBlindCount;
+          uniform float uSpotlightRadius;
+          uniform float uSpotlightSoftness;
+          uniform float uSpotlightOpacity;
+          uniform float uMirror;
+          uniform float uDistort;
+          uniform vec3  uColor0;
+          uniform vec3  uColor1;
+          uniform vec3  uColor2;
+          uniform vec3  uColor3;
+          uniform vec3  uColor4;
+          uniform vec3  uColor5;
+          uniform vec3  uColor6;
+          uniform vec3  uColor7;
+          uniform int   uColorCount;
+          varying vec2 vUv;
+
+          float rand(vec2 co){
+            return fract(sin(dot(co, vec2(12.9898,78.233))) * 43758.5453);
+          }
+
+          vec2 rotate2D(vec2 p, float a){
+            float c = cos(a);
+            float s = sin(a);
+            return mat2(c, -s, s, c) * p;
+          }
+
+          vec3 getGradientColor(float t){
+            float tt = clamp(t, 0.0, 1.0);
+            int count = uColorCount;
+            if (count < 2) count = 2;
+            float scaled = tt * float(count - 1);
+            float seg = floor(scaled);
+            float f = fract(scaled);
+            if (seg < 1.0) return mix(uColor0, uColor1, f);
+            if (seg < 2.0 && count > 2) return mix(uColor1, uColor2, f);
+            if (seg < 3.0 && count > 3) return mix(uColor2, uColor3, f);
+            if (seg < 4.0 && count > 4) return mix(uColor3, uColor4, f);
+            if (seg < 5.0 && count > 5) return mix(uColor4, uColor5, f);
+            if (seg < 6.0 && count > 6) return mix(uColor5, uColor6, f);
+            if (seg < 7.0 && count > 7) return mix(uColor6, uColor7, f);
+            if (count > 7) return uColor7;
+            if (count > 6) return uColor6;
+            if (count > 5) return uColor5;
+            if (count > 4) return uColor4;
+            if (count > 3) return uColor3;
+            if (count > 2) return uColor2;
+            return uColor1;
+          }
+
+          void main() {
+            vec2 uv0 = vUv;
+
+            float aspect = iResolution.x / iResolution.y;
+            vec2 p = uv0 * 2.0 - 1.0;
+            p.x *= aspect;
+            vec2 pr = rotate2D(p, uAngle);
+            pr.x /= aspect;
+            vec2 uv = pr * 0.5 + 0.5;
+            vec2 uvMod = uv;
+
+            if (uDistort > 0.0) {
+              float a = uvMod.y * 6.0;
+              float b = uvMod.x * 6.0;
+              float w = 0.01 * uDistort;
+              uvMod.x += sin(a) * w;
+              uvMod.y += cos(b) * w;
+            }
+
+            float t = uvMod.x;
+            if (uMirror > 0.5) {
+              t = 1.0 - abs(1.0 - 2.0 * fract(t));
+            }
+
+            vec3 base = getGradientColor(t);
+
+            vec2 offset = vec2(iMouse.x/iResolution.x, iMouse.y/iResolution.y);
+            float d = length(uv0 - offset);
+            float r = max(uSpotlightRadius, 1e-4);
+            float dn = d / r;
+            float spot = (1.0 - 2.0 * pow(dn, uSpotlightSoftness)) * uSpotlightOpacity;
+            vec3 cir = vec3(spot);
+
+            float stripe = fract(uvMod.x * max(uBlindCount, 1.0));
+            vec3 ran = vec3(stripe);
+
+            vec3 col = cir + base - ran;
+            col += (rand(gl_FragCoord.xy + iTime) - 0.5) * uNoise;
+            gl_FragColor = vec4(col, 1.0);
+          }
+        `);
+
+        // Create program
+        this.program = gl.createProgram();
+        gl.attachShader(this.program, vertexShader);
+        gl.attachShader(this.program, fragmentShader);
+        gl.linkProgram(this.program);
+
+        if (!gl.getProgramParameter(this.program, gl.LINK_STATUS)) {
+          console.error('Program failed to link:', gl.getProgramInfoLog(this.program));
+          return;
+        }
+
+        // Create geometry (fullscreen quad)
+        const vertices = new Float32Array([
+          -1, -1,  1, -1, -1,  1,
+           1, -1,  1,  1, -1,  1
+        ]);
+
+        this.vertexBuffer = gl.createBuffer();
+        gl.bindBuffer(gl.ARRAY_BUFFER, this.vertexBuffer);
+        gl.bufferData(gl.ARRAY_BUFFER, vertices, gl.STATIC_DRAW);
+
+        // Get attribute and uniform locations
+        this.positionAttribute = gl.getAttribLocation(this.program, 'a_position');
+
+        this.uniforms = {
+          iResolution: gl.getUniformLocation(this.program, 'iResolution'),
+          iMouse: gl.getUniformLocation(this.program, 'iMouse'),
+          iTime: gl.getUniformLocation(this.program, 'iTime'),
+          uAngle: gl.getUniformLocation(this.program, 'uAngle'),
+          uNoise: gl.getUniformLocation(this.program, 'uNoise'),
+          uBlindCount: gl.getUniformLocation(this.program, 'uBlindCount'),
+          uSpotlightRadius: gl.getUniformLocation(this.program, 'uSpotlightRadius'),
+          uSpotlightSoftness: gl.getUniformLocation(this.program, 'uSpotlightSoftness'),
+          uSpotlightOpacity: gl.getUniformLocation(this.program, 'uSpotlightOpacity'),
+          uMirror: gl.getUniformLocation(this.program, 'uMirror'),
+          uDistort: gl.getUniformLocation(this.program, 'uDistort'),
+          uColorCount: gl.getUniformLocation(this.program, 'uColorCount')
+        };
+
+        // Get color uniform locations
+        for (let i = 0; i < 8; i++) {
+          this.uniforms[`uColor${i}`] = gl.getUniformLocation(this.program, `uColor${i}`);
+        }
+      }
+
+      createShader(type, source) {
+        const gl = this.gl;
+        const shader = gl.createShader(type);
+        gl.shaderSource(shader, source);
+        gl.compileShader(shader);
+
+        if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
+          console.error('Shader compilation error:', gl.getShaderInfoLog(shader));
+          gl.deleteShader(shader);
+          return null;
+        }
+        return shader;
+      }
+
+      hexToRGB(hex) {
+        const c = hex.replace('#', '').padEnd(6, '0');
+        const r = parseInt(c.slice(0, 2), 16) / 255;
+        const g = parseInt(c.slice(2, 4), 16) / 255;
+        const b = parseInt(c.slice(4, 6), 16) / 255;
+        return [r, g, b];
+      }
+
+      prepareColors() {
+        const colors = this.params.colors.slice(0, 8);
+        if (colors.length === 1) colors.push(colors[0]);
+        while (colors.length < 8) colors.push(colors[colors.length - 1]);
+
+        const colorArray = colors.map(hex => this.hexToRGB(hex));
+        return { colorArray, count: Math.max(2, Math.min(8, this.params.colors.length)) };
+      }
+
+      resize() {
+        const rect = this.container.getBoundingClientRect();
+        const dpr = window.devicePixelRatio || 1;
+
+        this.canvas.width = rect.width * dpr;
+        this.canvas.height = rect.height * dpr;
+        this.canvas.style.width = rect.width + 'px';
+        this.canvas.style.height = rect.height + 'px';
+
+        this.gl.viewport(0, 0, this.canvas.width, this.canvas.height);
+
+        // Initialize mouse position to center
+        this.mouseTarget = [this.canvas.width / 2, this.canvas.height / 2];
+        this.mouse = [...this.mouseTarget];
+      }
+
+      setupEventListeners() {
+        window.addEventListener('resize', () => this.resize());
+
+        // Mouse tracking for entire document
+        document.addEventListener('mousemove', (e) => {
+          const rect = this.canvas.getBoundingClientRect();
+          const dpr = window.devicePixelRatio || 1;
+          this.mouseTarget[0] = (e.clientX - rect.left) * dpr;
+          this.mouseTarget[1] = (rect.height - (e.clientY - rect.top)) * dpr;
+        });
+
+        // Touch support
+        document.addEventListener('touchmove', (e) => {
+          if (e.touches.length > 0) {
+            const rect = this.canvas.getBoundingClientRect();
+            const dpr = window.devicePixelRatio || 1;
+            this.mouseTarget[0] = (e.touches[0].clientX - rect.left) * dpr;
+            this.mouseTarget[1] = (rect.height - (e.touches[0].clientY - rect.top)) * dpr;
+          }
+        });
+      }
+
+      render() {
+        if (this.paused) return;
+
+        const gl = this.gl;
+
+        gl.clear(gl.COLOR_BUFFER_BIT);
+        gl.useProgram(this.program);
+
+        // Bind vertex buffer
+        gl.bindBuffer(gl.ARRAY_BUFFER, this.vertexBuffer);
+        gl.enableVertexAttribArray(this.positionAttribute);
+        gl.vertexAttribPointer(this.positionAttribute, 2, gl.FLOAT, false, 0, 0);
+
+        // Update uniforms
+        const { colorArray, count } = this.prepareColors();
+
+        gl.uniform3f(this.uniforms.iResolution, this.canvas.width, this.canvas.height, 1);
+        gl.uniform2f(this.uniforms.iMouse, this.mouse[0], this.mouse[1]);
+        gl.uniform1f(this.uniforms.iTime, this.time);
+        gl.uniform1f(this.uniforms.uAngle, (this.params.angle * Math.PI) / 180);
+        gl.uniform1f(this.uniforms.uNoise, this.params.noise);
+        gl.uniform1f(this.uniforms.uBlindCount, Math.max(1, this.params.blindCount));
+        gl.uniform1f(this.uniforms.uSpotlightRadius, this.params.spotlightRadius);
+        gl.uniform1f(this.uniforms.uSpotlightSoftness, this.params.spotlightSoftness);
+        gl.uniform1f(this.uniforms.uSpotlightOpacity, this.params.spotlightOpacity);
+        gl.uniform1f(this.uniforms.uMirror, this.params.mirrorGradient ? 1 : 0);
+        gl.uniform1f(this.uniforms.uDistort, this.params.distortAmount);
+        gl.uniform1i(this.uniforms.uColorCount, count);
+
+        // Set color uniforms
+        for (let i = 0; i < 8; i++) {
+          const color = colorArray[i] || [0, 0, 0];
+          gl.uniform3f(this.uniforms[`uColor${i}`], color[0], color[1], color[2]);
+        }
+
+        gl.drawArrays(gl.TRIANGLES, 0, 6);
+      }
+
+      animate(currentTime = 0) {
+        this.time = currentTime * 0.001;
+
+        // Mouse dampening
+        if (this.params.mouseDampening > 0) {
+          const dt = this.lastTime ? (currentTime - this.lastTime) / 1000 : 0;
+          this.lastTime = currentTime;
+          const tau = Math.max(1e-4, this.params.mouseDampening);
+          let factor = 1 - Math.exp(-dt / tau);
+          if (factor > 1) factor = 1;
+
+          this.mouse[0] += (this.mouseTarget[0] - this.mouse[0]) * factor;
+          this.mouse[1] += (this.mouseTarget[1] - this.mouse[1]) * factor;
+        } else {
+          this.mouse = [...this.mouseTarget];
+          this.lastTime = currentTime;
+        }
+
+        this.render();
+        requestAnimationFrame((t) => this.animate(t));
+      }
+    }
+
+    // Initialize when DOM is ready
+    document.addEventListener('DOMContentLoaded', function() {
+      const container = document.getElementById('backgroundContainer');
+      if (container) {
+        console.log('🎨 Initializing ALLURA Gradient Blinds background...');
+        try {
+          new AlluraGradientBlinds(container);
+          console.log('✅ Background initialized successfully!');
+
+          // Update status indicator
+          const statusEl = document.getElementById('bgStatus');
+          if (statusEl) {
+            setTimeout(() => {
+              statusEl.style.opacity = '0';
+              setTimeout(() => statusEl.remove(), 300);
+            }, 5000);
+          }
+        } catch (error) {
+          console.error('❌ Background initialization failed:', error);
+          const statusEl = document.getElementById('bgStatus');
+          if (statusEl) {
+            statusEl.textContent = '❌ WebGL Not Supported';
+            statusEl.style.background = 'rgba(200, 0, 0, 0.9)';
+          }
+        }
+      }
+    });
+
+    // Basic interactions
+    document.addEventListener('DOMContentLoaded', function() {
+      // Smooth scroll for navigation
+      const navLinks = document.querySelectorAll('.nav-link');
+      navLinks.forEach(link => {
+        link.addEventListener('click', function(e) {
+          e.preventDefault();
+          const targetId = this.getAttribute('href');
+          const targetSection = document.querySelector(targetId);
+          if (targetSection) {
+            targetSection.scrollIntoView({ behavior: 'smooth' });
+          }
+        });
+      });
+
+      // Mobile menu toggle
+      const hamburger = document.getElementById('hamburger');
+      const navMenu = document.getElementById('nav-menu');
+
+      if (hamburger && navMenu) {
+        hamburger.addEventListener('click', function() {
+          hamburger.classList.toggle('active');
+          navMenu.classList.toggle('active');
+        });
+      }
+
+      // Button interactions
+      const buttons = document.querySelectorAll('button');
+      buttons.forEach(btn => {
+        btn.addEventListener('click', function() {
+          console.log('Button clicked:', this.textContent);
+        });
+      });
+    });
+  </script>
+</body>
+</html>
