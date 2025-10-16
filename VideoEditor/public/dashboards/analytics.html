@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Allura Analytics Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/feather-icons"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0a0a0a;
+            color: #f5f5f5;
+}
+        
+        .sidebar-icon {
+            transition: all 0.3s ease;
+        }
+        
+        .sidebar-icon:hover {
+            transform: translateX(5px);
+        }
+        .data-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            background-color: #121212;
+        }
+        
+        .data-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 180, 184, 0.2);
+}
+        .metric-up {
+            color: #00b4b8;
+        }
+        
+        .metric-down {
+            color: #f43f5e;
+        }
+        
+        .metric-neutral {
+            color: #a3a3a3;
+}
+        
+        .sparkline {
+            height: 40px;
+        }
+        
+        .platform-icon {
+            width: 24px;
+            height: 24px;
+            filter: brightness(0) invert(1);
+            opacity: 0.8;
+        }
+    </style>
+</head>
+    <body class="bg-[#0a0a0a] text-[#f5f5f5]">
+<div class="flex h-screen overflow-hidden">
+        <!-- Sidebar Navigation -->
+        <div class="w-20 bg-[#121212] flex flex-col items-center py-8 border-r border-[#1a1a1a]">
+<div class="mb-12">
+                <img src="https://static.photos/black/200x200/42" alt="Allura Logo" class="w-10 h-10 rounded-lg">
+            </div>
+            
+            <nav class="flex-1 space-y-8">
+                <a href="#" class="sidebar-icon flex flex-col items-center text-teal-400">
+                    <i data-feather="activity" class="w-6 h-6"></i>
+                    <span class="text-xs mt-2">Dashboard</span>
+                </a>
+                <a href="#" class="sidebar-icon flex flex-col items-center text-gray-400 hover:text-gray-200">
+                    <i data-feather="users" class="w-6 h-6"></i>
+                    <span class="text-xs mt-2">Audience</span>
+                </a>
+                <a href="#" class="sidebar-icon flex flex-col items-center text-gray-400 hover:text-gray-200">
+                    <i data-feather="layers" class="w-6 h-6"></i>
+                    <span class="text-xs mt-2">Content</span>
+                </a>
+                <a href="#" class="sidebar-icon flex flex-col items-center text-gray-400 hover:text-gray-200">
+                    <i data-feather="clock" class="w-6 h-6"></i>
+                    <span class="text-xs mt-2">Schedule</span>
+                </a>
+                <a href="#" class="sidebar-icon flex flex-col items-center text-gray-400 hover:text-gray-200">
+                    <i data-feather="settings" class="w-6 h-6"></i>
+                    <span class="text-xs mt-2">Settings</span>
+                </a>
+            </nav>
+        </div>
+
+        <!-- Main Content -->
+        <div class="flex-1 overflow-y-auto">
+            <!-- Top Header -->
+            <div class="bg-[#121212] border-b border-[#1a1a1a] px-8 py-4 flex justify-between items-center">
+<h1 class="text-xl font-bold tracking-wider">ALLURA GAMING STUDIO</h1>
+                <div class="flex items-center space-x-4">
+                    <button class="flex items-center text-gray-300 hover:text-white">
+                        <i data-feather="download" class="w-5 h-5 mr-2"></i>
+                        <span>Export</span>
+                    </button>
+                    <div class="w-8 h-8 rounded-full bg-gray-700 flex items-center justify-center">
+                        <i data-feather="user" class="w-4 h-4"></i>
+                    </div>
+                </div>
+            </div>
+            <!-- Analytics Header -->
+            <header class="bg-[#121212] border-b border-[#1a1a1a] px-8 py-4">
+<div class="flex justify-between items-center">
+                    <div>
+                        <h1 class="text-2xl font-bold">Analytics</h1>
+                        <p class="text-gray-400">Real-time insights for smarter growth</p>
+                    </div>
+                    <div class="flex items-center space-x-4">
+                        <div class="relative">
+                            <select class="bg-gray-700 border border-gray-600 rounded-lg px-4 py-2 pr-8 appearance-none focus:outline-none focus:ring-2 focus:ring-teal-500">
+                                <option>Last 7 days</option>
+                                <option>Last 30 days</option>
+                                <option>Last 90 days</option>
+                                <option>This year</option>
+                            </select>
+                            <i data-feather="chevron-down" class="absolute right-3 top-2.5 w-4 h-4"></i>
+                        </div>
+                        <button class="bg-teal-600 hover:bg-teal-700 px-4 py-2 rounded-lg flex items-center">
+                            <i data-feather="refresh-cw" class="w-4 h-4 mr-2"></i>
+                            <span>Refresh</span>
+                        </button>
+                    </div>
+                </div>
+            </header>
+<!-- Dashboard Content -->
+            <main class="p-8">
+                <!-- Summary Cards -->
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                    <!-- Total Views -->
+                <div class="data-card bg-[#121212] rounded-xl p-6 border border-[#1a1a1a]">
+<div class="flex justify-between items-start">
+                            <div>
+                                <p class="text-gray-400">Total Views</p>
+                                <h3 class="text-3xl font-bold mt-2">1.24M</h3>
+                                <div class="flex items-center mt-2">
+                                    <span class="metric-up flex items-center">
+                                        <i data-feather="trending-up" class="w-4 h-4 mr-1"></i>
+                                        12.4%
+                                    </span>
+                                    <span class="text-gray-500 text-sm ml-2">vs last week</span>
+                                </div>
+                            </div>
+                            <div class="w-16 h-16 bg-[#1a1a1a] rounded-lg flex items-center justify-center">
+                                <i data-feather="eye" class="w-8 h-8 text-[#00b4b8]"></i>
+</div>
+                        </div>
+                        <div class="mt-4 sparkline">
+                            <canvas id="viewsChart"></canvas>
+                        </div>
+                    </div>
+                    <!-- Watch Time -->
+                    <div class="data-card bg-[#121212] rounded-xl p-6 border border-[#1a1a1a]">
+<div class="flex justify-between items-start">
+                            <div>
+                                <p class="text-gray-400">Watch Time</p>
+                                <h3 class="text-3xl font-bold mt-2">4.7K hrs</h3>
+                                <div class="flex items-center mt-2">
+                                    <span class="metric-up flex items-center">
+                                        <i data-feather="trending-up" class="w-4 h-4 mr-1"></i>
+                                        8.2%
+                                    </span>
+                                    <span class="text-gray-500 text-sm ml-2">vs last week</span>
+                                </div>
+                            </div>
+                            <div class="w-16 h-16 bg-[#1a1a1a] rounded-lg flex items-center justify-center">
+                                <i data-feather="clock" class="w-8 h-8 text-[#f43f5e]"></i>
+</div>
+                        </div>
+                        <div class="mt-4 sparkline">
+                            <canvas id="watchTimeChart"></canvas>
+                        </div>
+                    </div>
+                    <!-- Engagement Rate -->
+                    <div class="data-card bg-[#121212] rounded-xl p-6 border border-[#1a1a1a]">
+<div class="flex justify-between items-start">
+                            <div>
+                                <p class="text-gray-400">Engagement Rate</p>
+                                <h3 class="text-3xl font-bold mt-2">7.8%</h3>
+                                <div class="flex items-center mt-2">
+                                    <span class="metric-neutral flex items-center">
+                                        <i data-feather="minus" class="w-4 h-4 mr-1"></i>
+                                        0.3%
+                                    </span>
+                                    <span class="text-gray-500 text-sm ml-2">vs last week</span>
+                                </div>
+                            </div>
+                            <div class="w-16 h-16 bg-[#1a1a1a] rounded-lg flex items-center justify-center">
+                                <i data-feather="heart" class="w-8 h-8 text-[#a3a3a3]"></i>
+</div>
+                        </div>
+                        <div class="mt-4 sparkline">
+                            <canvas id="engagementChart"></canvas>
+                        </div>
+                    </div>
+                    <!-- New Followers -->
+                    <div class="data-card bg-[#121212] rounded-xl p-6 border border-[#1a1a1a]">
+<div class="flex justify-between items-start">
+                            <div>
+                                <p class="text-gray-400">New Followers</p>
+                                <h3 class="text-3xl font-bold mt-2">3,284</h3>
+                                <div class="flex items-center mt-2">
+                                    <span class="metric-down flex items-center">
+                                        <i data-feather="trending-down" class="w-4 h-4 mr-1"></i>
+                                        2.1%
+                                    </span>
+                                    <span class="text-gray-500 text-sm ml-2">vs last week</span>
+                                </div>
+                            </div>
+                            <div class="w-16 h-16 bg-[#1a1a1a] rounded-lg flex items-center justify-center">
+                                <i data-feather="users" class="w-8 h-8 text-[#a3a3a3]"></i>
+</div>
+                        </div>
+                        <div class="mt-4 sparkline">
+                            <canvas id="followersChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Platform Breakdown -->
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
+                    <!-- YouTube Card -->
+                    <div class="data-card bg-[#121212] rounded-xl p-6 border border-[#1a1a1a] col-span-1">
+<div class="flex justify-between items-center mb-4">
+                            <div class="flex items-center">
+                                <img src="https://static.photos/red/200x200/1" alt="YouTube" class="platform-icon mr-2">
+                                <h3 class="font-bold">YouTube</h3>
+                            </div>
+                            <span class="text-xs bg-gray-700 px-2 py-1 rounded">Updated 2 min ago</span>
+                        </div>
+                        <div class="grid grid-cols-2 gap-4">
+                            <div>
+                                <p class="text-gray-400 text-sm">Views</p>
+                                <p class="font-bold">824K</p>
+                                <p class="text-green-500 text-xs flex items-center">
+                                    <i data-feather="trending-up" class="w-3 h-3 mr-1"></i>
+                                    14.2%
+                                </p>
+                            </div>
+                            <div>
+                                <p class="text-gray-400 text-sm">Watch Time</p>
+                                <p class="font-bold">3.1K hrs</p>
+                                <p class="text-green-500 text-xs flex items-center">
+                                    <i data-feather="trending-up" class="w-3 h-3 mr-1"></i>
+                                    9.7%
+                                </p>
+                            </div>
+                            <div>
+                                <p class="text-gray-400 text-sm">Subscribers</p>
+                                <p class="font-bold">1,842</p>
+                                <p class="text-red-500 text-xs flex items-center">
+                                    <i data-feather="trending-down" class="w-3 h-3 mr-1"></i>
+                                    1.3%
+                                </p>
+                            </div>
+                            <div>
+                                <p class="text-gray-400 text-sm">Likes</p>
+                                <p class="font-bold">42.8K</p>
+                                <p class="text-green-500 text-xs flex items-center">
+                                    <i data-feather="trending-up" class="w-3 h-3 mr-1"></i>
+                                    5.4%
+                                </p>
+                            </div>
+                        </div>
+                        <div class="mt-4 h-40">
+                            <canvas id="youtubeChart"></canvas>
+                        </div>
+                    </div>
+                    <!-- Instagram Card -->
+                    <div class="data-card bg-[#121212] rounded-xl p-6 border border-[#1a1a1a] col-span-1">
+<div class="flex justify-between items-center mb-4">
+                            <div class="flex items-center">
+                                <img src="https://static.photos/red/200x200/2" alt="Instagram" class="platform-icon mr-2">
+                                <h3 class="font-bold">Instagram</h3>
+                            </div>
+                            <span class="text-xs bg-gray-700 px-2 py-1 rounded">Updated 5 min ago</span>
+                        </div>
+                        <div class="grid grid-cols-2 gap-4">
+                            <div>
+                                <p class="text-gray-400 text-sm">Impressions</p>
+                                <p class="font-bold">286K</p>
+                                <p class="text-green-500 text-xs flex items-center">
+                                    <i data-feather="trending-up" class="w-3 h-3 mr-1"></i>
+                                    8.9%
+                                </p>
+                            </div>
+                            <div>
+                                <p class="text-gray-400 text-sm">Engagement</p>
+                                <p class="font-bold">6.2%</p>
+                                <p class="text-red-500 text-xs flex items-center">
+                                    <i data-feather="trending-down" class="w-3 h-3 mr-1"></i>
+                                    0.8%
+                                </p>
+                            </div>
+                            <div>
+                                <p class="text-gray-400 text-sm">Followers</p>
+                                <p class="font-bold">1,024</p>
+                                <p class="text-green-500 text-xs flex items-center">
+                                    <i data-feather="trending-up" class="w-3 h-3 mr-1"></i>
+                                    3.1%
+                                </p>
+                            </div>
+                            <div>
+                                <p class="text-gray-400 text-sm">Saves</p>
+                                <p class="font-bold">8.7K</p>
+                                <p class="text-green-500 text-xs flex items-center">
+                                    <i data-feather="trending-up" class="w-3 h-3 mr-1"></i>
+                                    12.4%
+                                </p>
+                            </div>
+                        </div>
+                        <div class="mt-4 h-40">
+                            <canvas id="instagramChart"></canvas>
+                        </div>
+                    </div>
+                    <!-- TikTok Card -->
+                    <div class="data-card bg-[#121212] rounded-xl p-6 border border-[#1a1a1a] col-span-1">
+<div class="flex justify-between items-center mb-4">
+                            <div class="flex items-center">
+                                <img src="https://static.photos/red/200x200/3" alt="TikTok" class="platform-icon mr-2">
+                                <h3 class="font-bold">TikTok</h3>
+                            </div>
+                            <span class="text-xs bg-gray-700 px-2 py-1 rounded">Updated 1 min ago</span>
+                        </div>
+                        <div class="grid grid-cols-2 gap-4">
+                            <div>
+                                <p class="text-gray-400 text-sm">Views</p>
+                                <p class="font-bold">128K</p>
+                                <p class="text-green-500 text-xs flex items-center">
+                                    <i data-feather="trending-up" class="w-3 h-3 mr-1"></i>
+                                    21.4%
+                                </p>
+                            </div>
+                            <div>
+                                <p class="text-gray-400 text-sm">Watch Time</p>
+                                <p class="font-bold">412 hrs</p>
+                                <p class="text-green-500 text-xs flex items-center">
+                                    <i data-feather="trending-up" class="w-3 h-3 mr-1"></i>
+                                    18.2%
+                                </p>
+                            </div>
+                            <div>
+                                <p class="text-gray-400 text-sm">Followers</p>
+                                <p class="font-bold">418</p>
+                                <p class="text-green-500 text-xs flex items-center">
+                                    <i data-feather="trending-up" class="w-3 h-3 mr-1"></i>
+                                    7.6%
+                                </p>
+                            </div>
+                            <div>
+                                <p class="text-gray-400 text-sm">Likes</p>
+                                <p class="font-bold">9.2K</p>
+                                <p class="text-green-500 text-xs flex items-center">
+                                    <i data-feather="trending-up" class="w-3 h-3 mr-1"></i>
+                                    15.3%
+                                </p>
+                            </div>
+                        </div>
+                        <div class="mt-4 h-40">
+                            <canvas id="tiktokChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+                <!-- AI Recommendations -->
+                <div class="data-card bg-[#121212] rounded-xl p-6 border border-[#1a1a1a] mb-8">
+<div class="flex justify-between items-center mb-4">
+                        <h3 class="font-bold flex items-center">
+                            <i data-feather="zap" class="w-5 h-5 text-yellow-400 mr-2"></i>
+                            AI-Powered Recommendations
+                        </h3>
+                        <span class="text-xs bg-gray-700 px-2 py-1 rounded">Just now</span>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div class="bg-gray-700 p-4 rounded-lg">
+                            <div class="flex items-start">
+                            <div class="bg-[#003d3f] p-2 rounded-lg mr-3">
+                                <i data-feather="clock" class="w-5 h-5 text-[#00b4b8]"></i>
+</div>
+                                <div>
+                                    <h4 class="font-medium mb-1">Posting Time</h4>
+                                    <p class="text-gray-400 text-sm">Your audience is most active between 4-6 PM. Schedule posts during this window for 23% higher engagement.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="bg-gray-700 p-4 rounded-lg">
+                            <div class="flex items-start">
+                            <div class="bg-[#4a0025] p-2 rounded-lg mr-3">
+                                <i data-feather="hash" class="w-5 h-5 text-[#f43f5e]"></i>
+</div>
+                                <div>
+                                    <h4 class="font-medium mb-1">Hashtag Strategy</h4>
+                                    <p class="text-gray-400 text-sm">Using 3-5 niche hashtags could increase your reach by 18%. Try: #GamingTips #StreamerLife #AlluraGaming</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="bg-gray-700 p-4 rounded-lg">
+                            <div class="flex items-start">
+                            <div class="bg-[#002b4a] p-2 rounded-lg mr-3">
+                                <i data-feather="video" class="w-5 h-5 text-[#a3a3a3]"></i>
+</div>
+                                <div>
+                                    <h4 class="font-medium mb-1">Content Length</h4>
+                                    <p class="text-gray-400 text-sm">Videos under 3 minutes perform 42% better on your channel. Consider breaking longer content into parts.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Engagement Trends -->
+                <div class="data-card bg-[#121212] rounded-xl p-6 border border-[#1a1a1a]">
+<div class="flex justify-between items-center mb-4">
+                        <h3 class="font-bold">Engagement Trends</h3>
+                        <div class="flex space-x-2">
+                            <button class="bg-gray-700 hover:bg-gray-600 px-3 py-1 rounded text-sm">Daily</button>
+                            <button class="bg-[#00b4b8] hover:bg-[#009a9e] px-3 py-1 rounded text-sm">Weekly</button>
+<button class="bg-gray-700 hover:bg-gray-600 px-3 py-1 rounded text-sm">Monthly</button>
+                        </div>
+                    </div>
+                    <div class="h-80">
+                        <canvas id="engagementTrendsChart"></canvas>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <script>
+        feather.replace();
+        
+        // Initialize charts
+        document.addEventListener('DOMContentLoaded', function() {
+            // Sparkline Charts
+            const sparklineOptions = {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false },
+                },
+                scales: {
+                    x: { display: false },
+                    y: { display: false }
+                },
+                elements: {
+                    line: {
+                        borderWidth: 2,
+                        tension: 0.4
+                    },
+                    point: { radius: 0 }
+                }
+            };
+            
+            // Views Chart
+            const viewsCtx = document.getElementById('viewsChart').getContext('2d');
+            new Chart(viewsCtx, {
+                type: 'line',
+                data: {
+                    labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+                    datasets: [{
+                        data: [12000, 19000, 15000, 20000, 18000, 22000, 24000],
+                        borderColor: '#00b4b8',
+                        backgroundColor: 'rgba(0, 180, 184, 0.1)',
+fill: true
+                    }]
+                },
+                options: sparklineOptions
+            });
+            
+            // Watch Time Chart
+            const watchTimeCtx = document.getElementById('watchTimeChart').getContext('2d');
+            new Chart(watchTimeCtx, {
+                type: 'line',
+                data: {
+                    labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+                    datasets: [{
+                        data: [400, 700, 500, 900, 800, 1000, 1200],
+                        borderColor: '#f43f5e',
+                        backgroundColor: 'rgba(244, 63, 94, 0.1)',
+fill: true
+                    }]
+                },
+                options: sparklineOptions
+            });
+            
+            // Engagement Chart
+            const engagementCtx = document.getElementById('engagementChart').getContext('2d');
+            new Chart(engagementCtx, {
+                type: 'line',
+                data: {
+                    labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+                    datasets: [{
+                        data: [6.8, 7.2, 7.0, 7.5, 7.3, 7.8, 8.0],
+                        borderColor: '#a3a3a3',
+                        backgroundColor: 'rgba(163, 163, 163, 0.1)',
+fill: true
+                    }]
+                },
+                options: sparklineOptions
+            });
+            
+            // Followers Chart
+            const followersCtx = document.getElementById('followersChart').getContext('2d');
+            new Chart(followersCtx, {
+                type: 'line',
+                data: {
+                    labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+                    datasets: [{
+                        data: [500, 450, 600, 550, 400, 350, 300],
+                        borderColor: '#a3a3a3',
+                        backgroundColor: 'rgba(163, 163, 163, 0.1)',
+fill: true
+                    }]
+                },
+                options: sparklineOptions
+            });
+            
+            // Platform Charts
+            const platformOptions = {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false },
+                },
+                scales: {
+                    x: { 
+                        display: true,
+                        grid: { display: false },
+                        ticks: { color: '#6b7280' }
+                    },
+                    y: { 
+                        display: true,
+                        grid: { color: 'rgba(255, 255, 255, 0.05)' },
+                        ticks: { color: '#6b7280' }
+                    }
+                }
+            };
+            
+            // YouTube Chart
+            const youtubeCtx = document.getElementById('youtubeChart').getContext('2d');
+            new Chart(youtubeCtx, {
+                type: 'bar',
+                data: {
+                    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+                    datasets: [{
+                        data: [120000, 190000, 150000, 180000, 200000, 240000],
+                        backgroundColor: '#f43f5e',
+borderRadius: 4
+                    }]
+                },
+                options: platformOptions
+            });
+            
+            // Instagram Chart
+            const instagramCtx = document.getElementById('instagramChart').getContext('2d');
+            new Chart(instagramCtx, {
+                type: 'line',
+                data: {
+                    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+                    datasets: [{
+                        data: [80000, 120000, 90000, 140000, 160000, 180000],
+                        borderColor: '#f43f5e',
+                        backgroundColor: 'rgba(244, 63, 94, 0.1)',
+fill: true,
+                        tension: 0.4
+                    }]
+                },
+                options: platformOptions
+            });
+            
+            // TikTok Chart
+            const tiktokCtx = document.getElementById('tiktokChart').getContext('2d');
+            new Chart(tiktokCtx, {
+                type: 'bar',
+                data: {
+                    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+                    datasets: [{
+                        data: [20000, 40000, 60000, 80000, 100000, 120000],
+                        backgroundColor: '#a3a3a3',
+borderRadius: 4
+                    }]
+                },
+                options: platformOptions
+            });
+            
+            // Engagement Trends Chart
+            const engagementTrendsCtx = document.getElementById('engagementTrendsChart').getContext('2d');
+            new Chart(engagementTrendsCtx, {
+                type: 'line',
+                data: {
+                    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'],
+                    datasets: [
+                        {
+                            label: 'YouTube',
+                            data: [6.2, 6.5, 6.8, 7.1, 7.3, 7.6, 7.8],
+                            borderColor: '#f43f5e',
+                            backgroundColor: 'rgba(244, 63, 94, 0.1)',
+fill: true,
+                            tension: 0.4
+                        },
+                        {
+                            label: 'Instagram',
+                            data: [5.8, 6.0, 6.2, 6.5, 6.7, 6.9, 7.2],
+                            borderColor: '#f43f5e',
+                            backgroundColor: 'rgba(244, 63, 94, 0.1)',
+fill: true,
+                            tension: 0.4
+                        },
+                        {
+                            label: 'TikTok',
+                            data: [4.5, 5.0, 5.5, 6.0, 6.5, 7.0, 7.5],
+                            borderColor: '#a3a3a3',
+                            backgroundColor: 'rgba(163, 163, 163, 0.1)',
+fill: true,
+                            tension: 0.4
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                            labels: {
+                                color: '#e5e7eb',
+                                usePointStyle: true,
+                                pointStyle: 'circle'
+                            }
+                        },
+                    },
+                    scales: {
+                        x: { 
+                            grid: { display: false },
+                            ticks: { color: '#6b7280' }
+                        },
+                        y: { 
+                            grid: { color: 'rgba(255, 255, 255, 0.05)' },
+                            ticks: { color: '#6b7280' }
+                        }
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>

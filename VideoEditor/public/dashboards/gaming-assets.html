@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gaming Assets Library</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/feather-icons"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        dark: {
+                            900: '#0a0a0a',
+                            800: '#121212',
+                            700: '#1a1a1a',
+                            600: '#2a2a2a',
+                        },
+                        accent: {
+                            red: '#ff4d4d',
+                            teal: '#00cccc',
+                            purple: '#8000ff',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0a0a0a;
+            color: #f0f0f0;
+        }
+        .asset-card {
+            transition: all 0.3s ease;
+            border-radius: 12px;
+            background: linear-gradient(145deg, #1a1a1a, #121212);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+        }
+        .asset-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(128, 0, 255, 0.3);
+            border: 1px solid #8000ff;
+        }
+        .sidebar {
+            background: linear-gradient(180deg, #0a0a0a 0%, #121212 100%);
+            box-shadow: 5px 0 15px rgba(0, 0, 0, 0.5);
+        }
+        .search-bar {
+            background: #1a1a1a;
+            border: 1px solid #2a2a2a;
+            border-radius: 50px;
+        }
+        .filter-btn {
+            transition: all 0.2s ease;
+        }
+        .filter-btn:hover {
+            background: #8000ff;
+            color: white;
+        }
+        .filter-btn.active {
+            background: #8000ff;
+            color: white;
+        }
+        .cta-button {
+            background: linear-gradient(90deg, #ff4d4d, #8000ff);
+            transition: all 0.3s ease;
+        }
+        .cta-button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 20px rgba(128, 0, 255, 0.5);
+        }
+        .preview-btn {
+            background: rgba(128, 0, 255, 0.2);
+            border: 1px solid #8000ff;
+            transition: all 0.2s ease;
+        }
+        .preview-btn:hover {
+            background: rgba(128, 0, 255, 0.4);
+        }
+    </style>
+</head>
+<body class="bg-dark-900 text-gray-100 min-h-screen">
+    <!-- Header -->
+    <header class="bg-dark-800 border-b border-dark-600 p-4 flex justify-between items-center">
+        <div class="flex items-center">
+            <h1 class="text-2xl font-bold text-white hovered-element">ALLURA<span class="text-accent-purple hovered-element">GAMING</span>STUDIO</h1>
+        </div>
+        <div class="flex items-center space-x-6">
+            <nav class="hidden md:flex space-x-6">
+                <a href="#" class="text-gray-300 hover:text-white transition">Dashboard</a>
+                <a href="#" class="text-gray-300 hover:text-white transition">Assets</a>
+                <a href="#" class="text-gray-300 hover:text-white transition">Projects</a>
+            </nav>
+            <div class="flex items-center space-x-4">
+                <button class="p-2 rounded-full hover:bg-dark-700 transition">
+                    <i data-feather="bell" class="text-gray-300"></i>
+                </button>
+                <div class="w-10 h-10 rounded-full bg-accent-purple flex items-center justify-center">
+                    <i data-feather="user" class="text-white"></i>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <div class="flex min-h-screen">
+        <!-- Sidebar -->
+        <div class="sidebar w-64 min-h-screen p-6 flex flex-col">
+            <div class="mb-10">
+            </div>
+<!-- Search Bar -->
+            <div class="search-bar mb-8 p-2 flex items-center">
+                <i data-feather="search" class="text-gray-400 mr-2"></i>
+                <input type="text" placeholder="Search assets..." class="bg-transparent border-none w-full focus:outline-none text-white">
+            </div>
+            
+            <!-- Filters -->
+            <div class="mb-8">
+                <h3 class="text-lg font-semibold mb-4 text-gray-300">Filters</h3>
+                <div class="space-y-3">
+                    <button class="filter-btn w-full text-left p-3 rounded-lg bg-dark-700 text-gray-300 flex items-center">
+                        <i data-feather="music" class="mr-3 text-accent-teal"></i>
+                        Music
+                    </button>
+                    <button class="filter-btn w-full text-left p-3 rounded-lg bg-dark-700 text-gray-300 flex items-center">
+                        <i data-feather="volume-2" class="mr-3 text-accent-red"></i>
+                        Sound Effects
+                    </button>
+                    <button class="filter-btn w-full text-left p-3 rounded-lg bg-dark-700 text-gray-300 flex items-center">
+                        <i data-feather="film" class="mr-3 text-accent-purple"></i>
+                        Animations
+                    </button>
+                    <button class="filter-btn w-full text-left p-3 rounded-lg bg-dark-700 text-gray-300 flex items-center">
+                        <i data-feather="layers" class="mr-3 text-gray-400"></i>
+                        All Assets
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Categories -->
+            <div class="mb-8">
+                <h3 class="text-lg font-semibold mb-4 text-gray-300">Categories</h3>
+                <div class="space-y-2 text-gray-400">
+                    <div class="flex justify-between">
+                        <span>Action</span>
+                        <span class="text-accent-red">24</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span>Ambient</span>
+                        <span class="text-accent-teal">18</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span>UI Sounds</span>
+                        <span class="text-accent-purple">32</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span>Character</span>
+                        <span class="text-gray-500">15</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Tags -->
+            <div>
+                <h3 class="text-lg font-semibold mb-4 text-gray-300">Popular Tags</h3>
+                <div class="flex flex-wrap gap-2">
+                    <span class="px-3 py-1 bg-dark-700 rounded-full text-sm">#epic</span>
+                    <span class="px-3 py-1 bg-dark-700 rounded-full text-sm">#8bit</span>
+                    <span class="px-3 py-1 bg-dark-700 rounded-full text-sm">#synthwave</span>
+                    <span class="px-3 py-1 bg-dark-700 rounded-full text-sm">#battle</span>
+                    <span class="px-3 py-1 bg-dark-700 rounded-full text-sm">#menu</span>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Main Content -->
+        <div class="flex-1 p-8">
+            <!-- Header -->
+            <div class="mb-12">
+                <h1 class="text-5xl font-bold mb-4">
+                    Gaming <span class="text-accent-red">Assets</span>
+                </h1>
+                <p class="text-xl text-gray-400 max-w-3xl">
+                    A comprehensive library of copyright-safe music, sound effects, and animations for gaming content creators. 
+                    All assets are 100% royalty-free and ready for commercial use.
+                </p>
+            </div>
+            
+            <!-- Controls -->
+            <div class="flex justify-between items-center mb-8">
+                <div class="flex space-x-4">
+                    <button class="px-6 py-3 bg-dark-700 rounded-lg flex items-center">
+                        <i data-feather="filter" class="mr-2"></i>
+                        Sort By
+                    </button>
+                    <button class="px-6 py-3 bg-dark-700 rounded-lg flex items-center">
+                        <i data-feather="download" class="mr-2"></i>
+                        Download All
+                    </button>
+                </div>
+                <div class="text-gray-400">
+                    142 assets found
+                </div>
+            </div>
+            
+            <!-- Asset Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+<!-- Asset Card 1 -->
+                <div class="asset-card p-5">
+                    <div class="relative mb-4">
+                        <div class="bg-dark-700 h-40 rounded-lg flex items-center justify-center">
+                            <i data-feather="music" class="text-accent-teal w-12 h-12"></i>
+                        </div>
+                        <div class="absolute top-3 right-3">
+                            <span class="px-2 py-1 bg-accent-teal text-black text-xs font-bold rounded">MUSIC</span>
+                        </div>
+                    </div>
+                    <h3 class="font-bold text-lg mb-2">Epic Battle Theme</h3>
+                    <p class="text-gray-400 text-sm mb-4">High-energy orchestral track perfect for boss battles</p>
+                    <div class="flex justify-between items-center">
+                        <button class="preview-btn px-4 py-2 rounded-lg text-sm">
+                            Preview
+                        </button>
+                        <button class="cta-button px-4 py-2 rounded-lg text-sm font-bold">
+                            Add to Project
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Asset Card 2 -->
+                <div class="asset-card p-5">
+                    <div class="relative mb-4">
+                        <div class="bg-dark-700 h-40 rounded-lg flex items-center justify-center">
+                            <i data-feather="volume-2" class="text-accent-red w-12 h-12"></i>
+                        </div>
+                        <div class="absolute top-3 right-3">
+                            <span class="px-2 py-1 bg-accent-red text-black text-xs font-bold rounded">SFX</span>
+                        </div>
+                    </div>
+                    <h3 class="font-bold text-lg mb-2">Laser Blast</h3>
+                    <p class="text-gray-400 text-sm mb-4">Futuristic energy weapon sound effect</p>
+                    <div class="flex justify-between items-center">
+                        <button class="preview-btn px-4 py-2 rounded-lg text-sm">
+                            Preview
+                        </button>
+                        <button class="cta-button px-4 py-2 rounded-lg text-sm font-bold">
+                            Add to Project
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Asset Card 3 -->
+                <div class="asset-card p-5">
+                    <div class="relative mb-4">
+                        <div class="bg-dark-700 h-40 rounded-lg flex items-center justify-center">
+                            <i data-feather="film" class="text-accent-purple w-12 h-12"></i>
+                        </div>
+                        <div class="absolute top-3 right-3">
+                            <span class="px-2 py-1 bg-accent-purple text-black text-xs font-bold rounded">ANIM</span>
+                        </div>
+                    </div>
+                    <h3 class="font-bold text-lg mb-2">Character Idle</h3>
+                    <p class="text-gray-400 text-sm mb-4">Smooth looping animation for character idle state</p>
+                    <div class="flex justify-between items-center">
+                        <button class="preview-btn px-4 py-2 rounded-lg text-sm">
+                            Preview
+                        </button>
+                        <button class="cta-button px-4 py-2 rounded-lg text-sm font-bold">
+                            Add to Project
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Asset Card 4 -->
+                <div class="asset-card p-5">
+                    <div class="relative mb-4">
+                        <div class="bg-dark-700 h-40 rounded-lg flex items-center justify-center">
+                            <i data-feather="music" class="text-accent-teal w-12 h-12"></i>
+                        </div>
+                        <div class="absolute top-3 right-3">
+                            <span class="px-2 py-1 bg-accent-teal text-black text-xs font-bold rounded">MUSIC</span>
+                        </div>
+                    </div>
+                    <h3 class="font-bold text-lg mb-2">Ambient Forest</h3>
+                    <p class="text-gray-400 text-sm mb-4">Peaceful nature soundscape with birds and wind</p>
+                    <div class="flex justify-between items-center">
+                        <button class="preview-btn px-4 py-2 rounded-lg text-sm">
+                            Preview
+                        </button>
+                        <button class="cta-button px-4 py-2 rounded-lg text-sm font-bold">
+                            Add to Project
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Asset Card 5 -->
+                <div class="asset-card p-5">
+                    <div class="relative mb-4">
+                        <div class="bg-dark-700 h-40 rounded-lg flex items-center justify-center">
+                            <i data-feather="volume-2" class="text-accent-red w-12 h-12"></i>
+                        </div>
+                        <div class="absolute top-3 right-3">
+                            <span class="px-2 py-1 bg-accent-red text-black text-xs font-bold rounded">SFX</span>
+                        </div>
+                    </div>
+                    <h3 class="font-bold text-lg mb-2">UI Click</h3>
+                    <p class="text-gray-400 text-sm mb-4">Clean interface click sound for menus</p>
+                    <div class="flex justify-between items-center">
+                        <button class="preview-btn px-4 py-2 rounded-lg text-sm">
+                            Preview
+                        </button>
+                        <button class="cta-button px-4 py-2 rounded-lg text-sm font-bold">
+                            Add to Project
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Asset Card 6 -->
+                <div class="asset-card p-5">
+                    <div class="relative mb-4">
+                        <div class="bg-dark-700 h-40 rounded-lg flex items-center justify-center">
+                            <i data-feather="film" class="text-accent-purple w-12 h-12"></i>
+                        </div>
+                        <div class="absolute top-3 right-3">
+                            <span class="px-2 py-1 bg-accent-purple text-black text-xs font-bold rounded">ANIM</span>
+                        </div>
+                    </div>
+                    <h3 class="font-bold text-lg mb-2">Explosion Effect</h3>
+                    <p class="text-gray-400 text-sm mb-4">Particle explosion animation with debris</p>
+                    <div class="flex justify-between items-center">
+                        <button class="preview-btn px-4 py-2 rounded-lg text-sm">
+                            Preview
+                        </button>
+                        <button class="cta-button px-4 py-2 rounded-lg text-sm font-bold">
+                            Add to Project
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Asset Card 7 -->
+                <div class="asset-card p-5">
+                    <div class="relative mb-4">
+                        <div class="bg-dark-700 h-40 rounded-lg flex items-center justify-center">
+                            <i data-feather="music" class="text-accent-teal w-12 h-12"></i>
+                        </div>
+                        <div class="absolute top-3 right-3">
+                            <span class="px-2 py-1 bg-accent-teal text-black text-xs font-bold rounded">MUSIC</span>
+                        </div>
+                    </div>
+                    <h3 class="font-bold text-lg mb-2">Menu Theme</h3>
+                    <p class="text-gray-400 text-sm mb-4">Calm electronic track for main menus</p>
+                    <div class="flex justify-between items-center">
+                        <button class="preview-btn px-4 py-2 rounded-lg text-sm">
+                            Preview
+                        </button>
+                        <button class="cta-button px-4 py-2 rounded-lg text-sm font-bold">
+                            Add to Project
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Asset Card 8 -->
+                <div class="asset-card p-5">
+                    <div class="relative mb-4">
+                        <div class="bg-dark-700 h-40 rounded-lg flex items-center justify-center">
+                            <i data-feather="volume-2" class="text-accent-red w-12 h-12"></i>
+                        </div>
+                        <div class="absolute top-3 right-3">
+                            <span class="px-2 py-1 bg-accent-red text-black text-xs font-bold rounded">SFX</span>
+                        </div>
+                    </div>
+                    <h3 class="font-bold text-lg mb-2">Footsteps</h3>
+                    <p class="text-gray-400 text-sm mb-4">Set of walking sound effects on different surfaces</p>
+                    <div class="flex justify-between items-center">
+                        <button class="preview-btn px-4 py-2 rounded-lg text-sm">
+                            Preview
+                        </button>
+                        <button class="cta-button px-4 py-2 rounded-lg text-sm font-bold">
+                            Add to Project
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Additional Asset Cards -->
+                <!-- Music Asset 1 -->
+                <div class="asset-card p-5">
+                    <div class="relative mb-4">
+                        <div class="bg-dark-700 h-40 rounded-lg flex items-center justify-center">
+                            <i data-feather="music" class="text-accent-teal w-12 h-12"></i>
+                        </div>
+                        <div class="absolute top-3 right-3">
+                            <span class="px-2 py-1 bg-accent-teal text-black text-xs font-bold rounded">MUSIC</span>
+                        </div>
+                    </div>
+                    <h3 class="font-bold text-lg mb-2">Cyberpunk City</h3>
+                    <p class="text-gray-400 text-sm mb-4">Synth-heavy track with neon atmosphere</p>
+                    <div class="flex justify-between items-center">
+                        <button class="preview-btn px-4 py-2 rounded-lg text-sm">
+                            Preview
+                        </button>
+                        <button class="cta-button px-4 py-2 rounded-lg text-sm font-bold">
+                            Add to Project
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- SFX Asset 1 -->
+                <div class="asset-card p-5">
+                    <div class="relative mb-4">
+                        <div class="bg-dark-700 h-40 rounded-lg flex items-center justify-center">
+                            <i data-feather="volume-2" class="text-accent-red w-12 h-12"></i>
+                        </div>
+                        <div class="absolute top-3 right-3">
+                            <span class="px-2 py-1 bg-accent-red text-black text-xs font-bold rounded">SFX</span>
+                        </div>
+                    </div>
+                    <h3 class="font-bold text-lg mb-2">Power Up</h3>
+                    <p class="text-gray-400 text-sm mb-4">Rising tone indicating ability activation</p>
+                    <div class="flex justify-between items-center">
+                        <button class="preview-btn px-4 py-2 rounded-lg text-sm">
+                            Preview
+                        </button>
+                        <button class="cta-button px-4 py-2 rounded-lg text-sm font-bold">
+                            Add to Project
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Animation Asset 1 -->
+                <div class="asset-card p-5">
+                    <div class="relative mb-4">
+                        <div class="bg-dark-700 h-40 rounded-lg flex items-center justify-center">
+                            <i data-feather="film" class="text-accent-purple w-12 h-12"></i>
+                        </div>
+                        <div class="absolute top-3 right-3">
+                            <span class="px-2 py-1 bg-accent-purple text-black text-xs font-bold rounded">ANIM</span>
+                        </div>
+                    </div>
+                    <h3 class="font-bold text-lg mb-2">Magic Spell</h3>
+                    <p class="text-gray-400 text-sm mb-4">Fantasy spell casting animation with particles</p>
+                    <div class="flex justify-between items-center">
+                        <button class="preview-btn px-4 py-2 rounded-lg text-sm">
+                            Preview
+                        </button>
+                        <button class="cta-button px-4 py-2 rounded-lg text-sm font-bold">
+                            Add to Project
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Music Asset 2 -->
+                <div class="asset-card p-5">
+                    <div class="relative mb-4">
+                        <div class="bg-dark-700 h-40 rounded-lg flex items-center justify-center">
+                            <i data-feather="music" class="text-accent-teal w-12 h-12"></i>
+                        </div>
+                        <div class="absolute top-3 right-3">
+                            <span class="px-2 py-1 bg-accent-teal text-black text-xs font-bold rounded">MUSIC</span>
+                        </div>
+                    </div>
+                    <h3 class="font-bold text-lg mb-2">Horror Ambience</h3>
+                    <p class="text-gray-400 text-sm mb-4">Dark atmospheric track with tension building elements</p>
+                    <div class="flex justify-between items-center">
+                        <button class="preview-btn px-4 py-2 rounded-lg text-sm">
+                            Preview
+                        </button>
+                        <button class="cta-button px-4 py-2 rounded-lg text-sm font-bold">
+                            Add to Project
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- SFX Asset 2 -->
+                <div class="asset-card p-5">
+                    <div class="relative mb-4">
+                        <div class="bg-dark-700 h-40 rounded-lg flex items-center justify-center">
+                            <i data-feather="volume-2" class="text-accent-red w-12 h-12"></i>
+                        </div>
+                        <div class="absolute top-3 right-3">
+                            <span class="px-2 py-1 bg-accent-red text-black text-xs font-bold rounded">SFX</span>
+                        </div>
+                    </div>
+                    <h3 class="font-bold text-lg mb-2">Door Creak</h3>
+                    <p class="text-gray-400 text-sm mb-4">Spooky door opening sound effect</p>
+                    <div class="flex justify-between items-center">
+                        <button class="preview-btn px-4 py-2 rounded-lg text-sm">
+                            Preview
+                        </button>
+                        <button class="cta-button px-4 py-2 rounded-lg text-sm font-bold">
+                            Add to Project
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Animation Asset 2 -->
+                <div class="asset-card p-5">
+                    <div class="relative mb-4">
+                        <div class="bg-dark-700 h-40 rounded-lg flex items-center justify-center">
+                            <i data-feather="film" class="text-accent-purple w-12 h-12"></i>
+                        </div>
+                        <div class="absolute top-3 right-3">
+                            <span class="px-2 py-1 bg-accent-purple text-black text-xs font-bold rounded">ANIM</span>
+                        </div>
+                    </div>
+                    <h3 class="font-bold text-lg mb-2">Character Run</h3>
+                    <p class="text-gray-400 text-sm mb-4">Dynamic running cycle animation</p>
+                    <div class="flex justify-between items-center">
+                        <button class="preview-btn px-4 py-2 rounded-lg text-sm">
+                            Preview
+                        </button>
+                        <button class="cta-button px-4 py-2 rounded-lg text-sm font-bold">
+                            Add to Project
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Music Asset 3 -->
+                <div class="asset-card p-5">
+                    <div class="relative mb-4">
+                        <div class="bg-dark-700 h-40 rounded-lg flex items-center justify-center">
+                            <i data-feather="music" class="text-accent-teal w-12 h-12"></i>
+                        </div>
+                        <div class="absolute top-3 right-3">
+                            <span class="px-2 py-1 bg-accent-teal text-black text-xs font-bold rounded">MUSIC</span>
+                        </div>
+                    </div>
+                    <h3 class="font-bold text-lg mb-2">Victory Fanfare</h3>
+                    <p class="text-gray-400 text-sm mb-4">Triumphant orchestral piece for level completion</p>
+                    <div class="flex justify-between items-center">
+                        <button class="preview-btn px-4 py-2 rounded-lg text-sm">
+                            Preview
+                        </button>
+                        <button class="cta-button px-4 py-2 rounded-lg text-sm font-bold">
+                            Add to Project
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- SFX Asset 3 -->
+                <div class="asset-card p-5">
+                    <div class="relative mb-4">
+                        <div class="bg-dark-700 h-40 rounded-lg flex items-center justify-center">
+                            <i data-feather="volume-2" class="text-accent-red w-12 h-12"></i>
+                        </div>
+                        <div class="absolute top-3 right-3">
+                            <span class="px-2 py-1 bg-accent-red text-black text-xs font-bold rounded">SFX</span>
+                        </div>
+                    </div>
+                    <h3 class="font-bold text-lg mb-2">Coin Pickup</h3>
+                    <p class="text-gray-400 text-sm mb-4">Satisfying chime for collecting coins</p>
+                    <div class="flex justify-between items-center">
+                        <button class="preview-btn px-4 py-2 rounded-lg text-sm">
+                            Preview
+                        </button>
+                        <button class="cta-button px-4 py-2 rounded-lg text-sm font-bold">
+                            Add to Project
+                        </button>
+                    </div>
+                </div>
+</div>
+            <!-- Pagination -->
+            <div class="flex justify-center mt-12 space-x-2">
+<button class="w-10 h-10 rounded-full bg-dark-700 flex items-center justify-center">1</button>
+                <button class="w-10 h-10 rounded-full bg-dark-700 flex items-center justify-center">2</button>
+                <button class="w-10 h-10 rounded-full bg-dark-700 flex items-center justify-center">3</button>
+                <button class="w-10 h-10 rounded-full bg-dark-700 flex items-center justify-center">
+                    <i data-feather="chevron-right"></i>
+                </button>
+            </div>
+</div>
+    </div>
+
+    <script>
+        feather.replace();
+    </script>
+</body>
+</html>
